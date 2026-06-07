@@ -44,7 +44,7 @@ export default function Footer() {
           <div className="text-xs text-gray-400 space-y-1">
             <p>📍 Jagatpur Road, Gota, Ahmedabad, Gujarat, 382470</p>
             <p>📞 Phone: +91 76240 12997</p>
-            <p>✉️ Email: hello@tinkytots.com</p>
+            <p>✉️ Email: hello1@tinkytots.com</p>
           </div>
         </div>
 
