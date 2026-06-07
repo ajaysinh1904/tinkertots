@@ -6,7 +6,7 @@ import Confetti from '../components/Confetti';
 import TootsMascot from '../components/TootsMascot';
 import { StarDoodle, SpiralDoodle, StickerBadge } from '../components/HandDrawnDoodles';
 import { useTheme } from '../context/ThemeContext';
-
+import { Icons } from '../components/Icon';
 const EMAILJS_SERVICE_ID = 'service_6yarmxa';
 const EMAILJS_TEMPLATE_ID = 'template_q8rt1ki';
 const EMAILJS_PUBLIC_KEY = 'EK5d4-Qh-aPXFtWhE';
@@ -134,9 +134,8 @@ export default function Contact() {
       {showConfetti && <Confetti />}
 
       {/* 1. HERO */}
-      <section className={`relative py-12 px-4 border-b transition-colors duration-300 overflow-hidden ${
-        isKids ? 'bg-gradient-to-b from-white/30 to-cream border-b-2 border-navy' : 'bg-white border-b border-slate-200'
-      }`}>
+      <section className={`relative py-12 px-4 border-b transition-colors duration-300 overflow-hidden ${isKids ? 'bg-gradient-to-b from-white/30 to-cream border-b-2 border-navy' : 'bg-white border-b border-slate-200'
+        }`}>
         {/* Scattered Doodles */}
         {isKids && (
           <div className="absolute inset-0 pointer-events-none opacity-20">
@@ -170,11 +169,10 @@ export default function Contact() {
       <section className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
 
         {/* LEFT COLUMN - INFO PANEL */}
-        <div className={`lg:col-span-5 p-8 md:p-10 text-white relative overflow-hidden flex flex-col justify-between reveal active min-h-[450px] ${
-          isKids
-            ? 'bg-plum border-3 border-navy rounded-[40px] shadow-[8px_8px_0px_0px_#3B0764]'
-            : 'bg-slate-900 border border-slate-800 rounded-2xl shadow-md'
-        }`}>
+        <div className={`lg:col-span-5 p-8 md:p-10 text-white relative overflow-hidden flex flex-col justify-between reveal active min-h-[450px] ${isKids
+          ? 'bg-plum border-3 border-navy rounded-[40px] shadow-[8px_8px_0px_0px_#3B0764]'
+          : 'bg-slate-900 border border-slate-800 rounded-2xl shadow-md'
+          }`}>
           {/* Animated Background Blob */}
           {isKids && <div className="absolute inset-[-40px] bg-white/10 rounded-[60%_40%_30%_70%/_60%_30%_70%_40%] animate-blob-morph -z-10" />}
 
@@ -231,37 +229,19 @@ export default function Contact() {
           {/* Social icons row */}
           <div className="pt-8 border-t border-white/20">
             <p className="text-xs font-bold text-white/80 mb-3">FOLLOW OUR ACTIVITIES</p>
-            <div className="flex space-x-3">
-              {['Facebook', 'Instagram', 'YouTube', 'LinkedIn'].map((soc) => (
-                <a
-                  key={soc}
-                  href={`https://${soc.toLowerCase()}.com`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={
-                    isKids
-                      ? "w-10 h-10 bg-white hover:bg-amber text-navy border-2 border-navy rounded-full flex items-center justify-center font-accent text-xs shadow-[3px_3px_0px_0px_#3B0764] hover:translate-y-[-2px] transition-all"
-                      : "w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 rounded-lg flex items-center justify-center font-sans font-semibold text-xs shadow-sm hover:translate-y-[-1px] transition-all"
-                  }
-                >
-                  {soc.substring(0, 2)}
-                </a>
-              ))}
-            </div>
+            <Icons />
           </div>
         </div>
 
         {/* RIGHT COLUMN - CONTACT FORM */}
-        <div className={`lg:col-span-7 p-6 md:p-10 reveal active ${
-          isKids
-            ? 'bg-white border-3 border-navy rounded-[40px] shadow-[8px_8px_0px_0px_#3B0764]'
-            : 'bg-white border border-slate-200 rounded-2xl shadow-sm'
-        }`}>
+        <div className={`lg:col-span-7 p-6 md:p-10 reveal active ${isKids
+          ? 'bg-white border-3 border-navy rounded-[40px] shadow-[8px_8px_0px_0px_#3B0764]'
+          : 'bg-white border border-slate-200 rounded-2xl shadow-sm'
+          }`}>
 
           {/* Notification for clients testing POC */}
-          <div className={`p-3 rounded-2xl mb-6 text-xs font-semibold ${
-            isKids ? 'bg-yellow-50 border border-navy/20 text-navy' : 'bg-slate-50 border border-slate-100 text-slate-750'
-          }`}>
+          <div className={`p-3 rounded-2xl mb-6 text-xs font-semibold ${isKids ? 'bg-yellow-50 border border-navy/20 text-navy' : 'bg-slate-50 border border-slate-100 text-slate-750'
+            }`}>
             📢 **POC Note**: Submitting this form uses a simulator by default so you can view animations out-of-the-box.
           </div>
 
@@ -278,11 +258,10 @@ export default function Contact() {
                 name="fullName"
                 value={form.fullName}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
-                  isKids
-                    ? `rounded-2xl border-2 bg-cream/30 text-navy font-semibold ${errors.fullName ? 'border-plum ring-1 ring-plum/20' : 'border-navy/30 focus:border-plum'}`
-                    : `rounded-lg bg-white text-slate-800 border-slate-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500/20 ${errors.fullName ? 'border-red-500 ring-1 ring-red-500/20' : ''}`
-                }`}
+                className={`w-full px-4 py-3 border focus:outline-none transition-colors ${isKids
+                  ? `rounded-2xl border-2 bg-cream/30 text-navy font-semibold ${errors.fullName ? 'border-plum ring-1 ring-plum/20' : 'border-navy/30 focus:border-plum'}`
+                  : `rounded-lg bg-white text-slate-800 border-slate-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500/20 ${errors.fullName ? 'border-red-500 ring-1 ring-red-500/20' : ''}`
+                  }`}
                 placeholder="Parent's Name"
               />
               {errors.fullName && (
@@ -304,11 +283,10 @@ export default function Contact() {
                   name="email"
                   value={form.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
-                    isKids
-                      ? `rounded-2xl border-2 bg-cream/30 text-navy font-semibold ${errors.email ? 'border-plum ring-1 ring-plum/20' : 'border-navy/30 focus:border-plum'}`
-                      : `rounded-lg bg-white text-slate-800 border-slate-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500/20 ${errors.email ? 'border-red-500 ring-1 ring-red-500/20' : ''}`
-                  }`}
+                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${isKids
+                    ? `rounded-2xl border-2 bg-cream/30 text-navy font-semibold ${errors.email ? 'border-plum ring-1 ring-plum/20' : 'border-navy/30 focus:border-plum'}`
+                    : `rounded-lg bg-white text-slate-800 border-slate-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500/20 ${errors.email ? 'border-red-500 ring-1 ring-red-500/20' : ''}`
+                    }`}
                   placeholder="parent@example.com"
                 />
                 {errors.email && (
@@ -329,11 +307,10 @@ export default function Contact() {
                   name="phone"
                   value={form.phone}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
-                    isKids
-                      ? `rounded-2xl border-2 bg-cream/30 text-navy font-semibold ${errors.phone ? 'border-plum ring-1 ring-plum/20' : 'border-navy/30 focus:border-plum'}`
-                      : `rounded-lg bg-white text-slate-800 border-slate-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500/20 ${errors.phone ? 'border-red-500 ring-1 ring-red-500/20' : ''}`
-                  }`}
+                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${isKids
+                    ? `rounded-2xl border-2 bg-cream/30 text-navy font-semibold ${errors.phone ? 'border-plum ring-1 ring-plum/20' : 'border-navy/30 focus:border-plum'}`
+                    : `rounded-lg bg-white text-slate-800 border-slate-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500/20 ${errors.phone ? 'border-red-500 ring-1 ring-red-500/20' : ''}`
+                    }`}
                   placeholder="10-digit number"
                 />
                 {errors.phone && (
@@ -355,11 +332,10 @@ export default function Contact() {
                   name="childAge"
                   value={form.childAge}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
-                    isKids
-                      ? 'border-2 border-navy/30 focus:border-plum bg-cream/30 rounded-2xl font-semibold text-navy'
-                      : 'border border-slate-300 focus:border-slate-500 bg-white rounded-lg text-slate-800 font-normal'
-                  }`}
+                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${isKids
+                    ? 'border-2 border-navy/30 focus:border-plum bg-cream/30 rounded-2xl font-semibold text-navy'
+                    : 'border border-slate-300 focus:border-slate-500 bg-white rounded-lg text-slate-800 font-normal'
+                    }`}
                 >
                   <option value="1.5-2yrs">1.5 – 2 yrs</option>
                   <option value="2-3yrs">2 – 3 yrs</option>
@@ -379,11 +355,10 @@ export default function Contact() {
                   name="program"
                   value={form.program}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
-                    isKids
-                      ? 'border-2 border-navy/30 focus:border-plum bg-cream/30 rounded-2xl font-semibold text-navy'
-                      : 'border border-slate-300 focus:border-slate-500 bg-white rounded-lg text-slate-800 font-normal'
-                  }`}
+                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${isKids
+                    ? 'border-2 border-navy/30 focus:border-plum bg-cream/30 rounded-2xl font-semibold text-navy'
+                    : 'border border-slate-300 focus:border-slate-500 bg-white rounded-lg text-slate-800 font-normal'
+                    }`}
                 >
                   <option value="Playgroup">Playgroup (1.5 - 2.5y)</option>
                   <option value="Nursery">Nursery (2.5 - 3.5y)</option>
@@ -405,11 +380,10 @@ export default function Contact() {
                 value={form.message}
                 onChange={handleInputChange}
                 rows="4"
-                className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
-                  isKids
-                    ? 'border-2 border-navy/30 focus:border-plum bg-cream/30 rounded-2xl text-navy font-semibold'
-                    : 'border border-slate-300 focus:border-slate-500 bg-white rounded-lg text-slate-800 font-normal'
-                }`}
+                className={`w-full px-4 py-3 border focus:outline-none transition-colors ${isKids
+                  ? 'border-2 border-navy/30 focus:border-plum bg-cream/30 rounded-2xl text-navy font-semibold'
+                  : 'border border-slate-300 focus:border-slate-500 bg-white rounded-lg text-slate-800 font-normal'
+                  }`}
                 placeholder="Ask us anything!"
               ></textarea>
             </div>
@@ -421,11 +395,10 @@ export default function Contact() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-4 transition-all flex items-center justify-center space-x-2 ${
-                isKids
-                  ? 'bg-plum hover:bg-violet/95 text-white font-accent text-lg rounded-2xl border-3 border-navy shadow-[6px_6px_0px_0px_#3B0764] hover:translate-y-[-2px] hover:shadow-[8px_8px_0px_0px_#3B0764] active:scale-98'
-                  : 'bg-slate-900 hover:bg-slate-800 text-white font-sans font-semibold text-base rounded-lg shadow-sm hover:translate-y-[-1px] active:scale-98'
-              }`}
+              className={`w-full py-4 transition-all flex items-center justify-center space-x-2 ${isKids
+                ? 'bg-plum hover:bg-violet/95 text-white font-accent text-lg rounded-2xl border-3 border-navy shadow-[6px_6px_0px_0px_#3B0764] hover:translate-y-[-2px] hover:shadow-[8px_8px_0px_0px_#3B0764] active:scale-98'
+                : 'bg-slate-900 hover:bg-slate-800 text-white font-sans font-semibold text-base rounded-lg shadow-sm hover:translate-y-[-1px] active:scale-98'
+                }`}
             >
               {loading ? (
                 <div className="flex items-center space-x-2">
@@ -453,11 +426,10 @@ export default function Contact() {
         </div>
 
         {/* Map Frame */}
-        <div className={`relative overflow-hidden bg-white h-[500px] w-full ${
-          isKids
-            ? 'border-4 border-plum rounded-3xl shadow-[8px_8px_0px_0px_#3B0764]'
-            : 'border border-slate-200 rounded-2xl shadow-sm'
-        }`}>
+        <div className={`relative overflow-hidden bg-white h-[500px] w-full ${isKids
+          ? 'border-4 border-plum rounded-3xl shadow-[8px_8px_0px_0px_#3B0764]'
+          : 'border border-slate-200 rounded-2xl shadow-sm'
+          }`}>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.3643729910777!2d72.5358043!3d23.0956463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e8334460773d5%3A0x63390cc98bb9eb98!2sJagatpur%20Rd%2C%20Gota%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000"
             width="100%"
@@ -499,11 +471,10 @@ export default function Contact() {
       {/* 4. SUCCESS DIALOG MODAL */}
       {showSuccessModal && (
         <div className="fixed inset-0 bg-[#3B0764]/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
-          <div className={`bg-white text-center relative w-full ${
-            isKids
-              ? 'border-3 border-navy rounded-[36px] max-w-sm p-6 shadow-[10px_10px_0px_0px_#3B0764] animate-[bounce-light_0.4s_ease-out_forwards]'
-              : 'border border-slate-200 rounded-2xl max-w-sm p-8 shadow-xl'
-          }`}>
+          <div className={`bg-white text-center relative w-full ${isKids
+            ? 'border-3 border-navy rounded-[36px] max-w-sm p-6 shadow-[10px_10px_0px_0px_#3B0764] animate-[bounce-light_0.4s_ease-out_forwards]'
+            : 'border border-slate-200 rounded-2xl max-w-sm p-8 shadow-xl'
+            }`}>
 
             {/* Cute Owl Mascot Top Header */}
             {isKids && (
@@ -524,11 +495,10 @@ export default function Contact() {
 
             <button
               onClick={handleCloseModal}
-              className={`w-full py-2.5 mt-6 transition-all text-sm ${
-                isKids
-                  ? 'bg-plum hover:bg-violet/95 text-white font-accent rounded-xl border-2 border-navy shadow-[3px_3px_0px_0px_#3B0764] active:scale-95'
-                  : 'bg-slate-900 hover:bg-slate-800 text-white font-sans font-semibold rounded-lg shadow-sm active:scale-95'
-              }`}
+              className={`w-full py-2.5 mt-6 transition-all text-sm ${isKids
+                ? 'bg-plum hover:bg-violet/95 text-white font-accent rounded-xl border-2 border-navy shadow-[3px_3px_0px_0px_#3B0764] active:scale-95'
+                : 'bg-slate-900 hover:bg-slate-800 text-white font-sans font-semibold rounded-lg shadow-sm active:scale-95'
+                }`}
             >
               Awesome, Thanks! 💛
             </button>

@@ -2,23 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import TootsMascot from './TootsMascot';
+import { Icons } from './Icon';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const { theme } = useTheme();
   const isKids = theme === 'kids';
 
-  const socialLinks = [
-    { name: 'Facebook', url: 'https://facebook.com', icon: 'FB', color: 'hover:bg-[#1877F2]' },
-    { name: 'Instagram', url: 'https://instagram.com', icon: 'IG', color: 'hover:bg-[#E1306C]' },
-    { name: 'YouTube', url: 'https://youtube.com', icon: 'YT', color: 'hover:bg-[#FF0000]' },
-    { name: 'LinkedIn', url: 'https://linkedin.com', icon: 'LN', color: 'hover:bg-[#0077B5]' }
-  ];
 
   return (
-    <footer className={`relative bg-navy text-white pb-8 overflow-hidden font-body ${
-      isKids ? 'pt-24 border-t-0' : 'pt-12 border-t border-slate-800'
-    }`}>
+    <footer className={`relative bg-navy text-white pb-8 overflow-hidden font-body ${isKids ? 'pt-24 border-t-0' : 'pt-12 border-t border-slate-800'
+      }`}>
       {/* SVG Wave Divider on Top (Kids theme only) */}
       {isKids && (
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] transform rotate-180">
@@ -33,7 +27,7 @@ export default function Footer() {
       )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        
+
         {/* Column 1: Info & Mascot */}
         <div className="flex flex-col space-y-4">
           <div className="flex items-center space-x-2">
@@ -88,24 +82,13 @@ export default function Footer() {
               * Drop-offs start at 8:15 AM
             </p>
           </div>
-          
+
           {/* Social Icons Row */}
           <div>
-            <h3 className={`${isKids ? 'font-display' : 'font-sans'} font-bold text-sm text-white mb-2`}>Connect with Us</h3>
-            <div className="flex space-x-2">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-8 h-8 rounded-full border border-gray-400 flex items-center justify-center text-xs font-bold text-white transition-all duration-300 hover:scale-110 hover:border-transparent ${social.color}`}
-                  aria-label={social.name}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
+            <h3 className={`${isKids ? 'font-display' : 'font-sans'} font-bold text-sm text-white mb-2`}>
+              Connect with Us
+            </h3>
+            <Icons />
           </div>
         </div>
 
