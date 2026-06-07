@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useScrollReveal from '../hooks/useScrollReveal';
 import Lightbox from '../components/Lightbox';
 import { StickerBadge, StarDoodle, HeartDoodle } from '../components/HandDrawnDoodles';
+import { useTheme } from '../context/ThemeContext';
 
 const galleryImages = [
   { id: 1, src: 'images/gallery/img1.jpeg', title: 'Interactive Reading Circles 📚', category: 'Classroom' },
@@ -24,6 +25,8 @@ function GalleryItem({ img, onClick }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const containerRef = useRef(null);
+  const { theme } = useTheme();
+  const isKids = theme === 'kids';
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -53,7 +56,11 @@ function GalleryItem({ img, onClick }) {
     <div
       ref={containerRef}
       onClick={onClick}
-      className="group relative cursor-pointer border-3 border-navy rounded-3xl overflow-hidden bg-white shadow-[6px_6px_0px_0px_#1A1A2E] hover:-translate-y-1 transition-all h-[260px] w-full"
+      className={`group relative cursor-pointer overflow-hidden bg-white transition-all h-[260px] w-full ${
+        isKids
+          ? 'border-3 border-navy rounded-3xl shadow-[6px_6px_0px_0px_#3B0764] hover:-translate-y-1'
+          : 'border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-0.5'
+      }`}
     >
       {/* Image (smooth fade & scale after visibility & download triggers) */}
       <img
@@ -66,19 +73,27 @@ function GalleryItem({ img, onClick }) {
       />
 
       {/* Dark Hover Overlay */}
-      <div className="absolute inset-0 bg-[#1A1A2E]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+      <div className="absolute inset-0 bg-[#3B0764]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
         <div className="text-white text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-          <h3 className="font-display font-bold text-lg leading-tight">
+          <h3 className={`leading-tight ${isKids ? 'font-display font-bold text-lg' : 'font-sans font-bold text-lg'}`}>
             {img.title}
           </h3>
-          <span className="inline-block mt-2 px-3 py-1 bg-sunshine text-navy font-accent text-xs rounded-full">
-            🔍 {img.category}
-          </span>
+          {isKids ? (
+            <span className="inline-block mt-2 px-3 py-1 bg-gold text-navy font-accent text-xs rounded-full">
+              🔍 {img.category}
+            </span>
+          ) : (
+            <span className="inline-block mt-2 px-3 py-1 bg-slate-800 text-white font-sans text-xs font-semibold rounded-md border border-slate-700">
+              🔍 {img.category}
+            </span>
+          )}
         </div>
       </div>
 
       {/* Small Zoom Icon indicator */}
-      <div className="absolute top-4 right-4 bg-white/90 border border-navy rounded-full w-8 h-8 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow">
+      <div className={`absolute top-4 right-4 bg-white/90 border rounded-full w-8 h-8 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow ${
+        isKids ? 'border-navy' : 'border-slate-350'
+      }`}>
         🔍
       </div>
     </div>
@@ -93,8 +108,8 @@ export const blogPosts = [
     date: 'June 05, 2026',
     excerpt: 'How reading picture books together before bedtime boosts speech, literacy, and child focus.',
     img: 'https://picsum.photos/seed/reading-books/600/400',
-    color: 'border-t-sunshine',
-    badgeColor: 'sunshine',
+    color: 'border-t-gold',
+    badgeColor: 'gold',
   },
   {
     id: 2,
@@ -103,8 +118,8 @@ export const blogPosts = [
     date: 'May 28, 2026',
     excerpt: 'Why free-play lets kids develop cognitive logic, problem-solving skills, and friend groups.',
     img: 'https://picsum.photos/seed/sandbox-play/600/400',
-    color: 'border-t-coral',
-    badgeColor: 'coral',
+    color: 'border-t-plum',
+    badgeColor: 'plum',
   },
   {
     id: 3,
@@ -113,8 +128,8 @@ export const blogPosts = [
     date: 'May 12, 2026',
     excerpt: 'Sensory-rich DIY play projects using flour, clay, and leaves from the garden.',
     img: 'https://picsum.photos/seed/craft-diy/600/400',
-    color: 'border-t-skyblue',
-    badgeColor: 'skyblue',
+    color: 'border-t-lilac',
+    badgeColor: 'lilac',
   },
   {
     id: 4,
@@ -123,8 +138,8 @@ export const blogPosts = [
     date: 'May 01, 2026',
     excerpt: 'Practical advice and routine adjustments to make the drop-off stress-free for toddlers.',
     img: 'https://picsum.photos/seed/separation-anxiety/600/400',
-    color: 'border-t-mint',
-    badgeColor: 'mint',
+    color: 'border-t-blush',
+    badgeColor: 'blush',
   },
   {
     id: 5,
@@ -143,8 +158,8 @@ export const blogPosts = [
     date: 'April 05, 2026',
     excerpt: 'How basic block building and outdoor playground games construct early geometric reasoning.',
     img: 'https://picsum.photos/seed/geometric-reasoning/600/400',
-    color: 'border-t-sunshine',
-    badgeColor: 'sunshine',
+    color: 'border-t-gold',
+    badgeColor: 'gold',
   }
 ];
 
@@ -195,6 +210,8 @@ const parentReviews = [
 
 export default function MediaCorner() {
   useScrollReveal();
+  const { theme } = useTheme();
+  const isKids = theme === 'kids';
   const [activeTab, setActiveTab] = useState('gallery');
   const [galleryFilter, setGalleryFilter] = useState('All');
   const [lightboxState, setLightboxState] = useState({ isOpen: false, index: 0 });
@@ -235,21 +252,29 @@ export default function MediaCorner() {
   }, [activeTab, galleryFilter]);
 
   return (
-    <div className="bg-cream min-h-screen">
+    <div className={`min-h-screen ${isKids ? 'bg-cream' : 'bg-slate-50'}`}>
 
       {/* 1. HERO CORNER */}
-      <section className="relative py-12 px-4 bg-gradient-to-b from-white/30 to-cream border-b-2 border-navy overflow-hidden">
+      <section className={`relative py-12 px-4 border-b transition-colors duration-300 overflow-hidden ${
+        isKids ? 'bg-gradient-to-b from-white/30 to-cream border-b-2 border-navy' : 'bg-white border-b border-slate-200'
+      }`}>
         {/* Breadcrumb */}
-        <div className="max-w-7xl mx-auto px-4 mb-4 text-sm font-bold text-navy/60">
-          <Link to="/" className="hover:text-coral transition-colors">Home</Link> &gt; <span className="text-navy">Media Corner</span>
+        <div className={`max-w-7xl mx-auto px-4 mb-4 text-sm font-bold ${isKids ? 'text-navy/60' : 'text-slate-400'}`}>
+          <Link to="/" className="hover:text-violet transition-colors">Home</Link> &gt; <span className={isKids ? 'text-navy' : 'text-slate-700'}>Media Corner</span>
         </div>
 
         <div className="max-w-7xl mx-auto text-center space-y-4 relative z-10">
-          <StickerBadge text="Our Media Corner 📸" color="sunshine" rotate="-2deg" className="mb-2" />
-          <h1 className="text-4xl sm:text-5xl font-display font-extrabold text-navy">
+          {isKids ? (
+            <StickerBadge text="Our Media Corner 📸" color="gold" rotate="-2deg" className="mb-2" />
+          ) : (
+            <span className="inline-block px-4 py-1.5 bg-slate-100 text-slate-800 text-sm font-semibold rounded-full border border-slate-200 mb-2">
+              Our Media Corner 📸
+            </span>
+          )}
+          <h1 className={`text-4xl sm:text-5xl ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>
             Peek Into Our Magical Garden 🌻
           </h1>
-          <p className="text-navy/70 max-w-xl mx-auto font-semibold">
+          <p className={`max-w-xl mx-auto ${isKids ? 'text-navy/70 font-semibold' : 'text-slate-600 font-normal'}`}>
             See our classroom environments, view our educational blog, or read feedback from school families.
           </p>
         </div>
@@ -257,7 +282,11 @@ export default function MediaCorner() {
 
       {/* 2. TAB CONTROL BUTTONS */}
       <section className="py-8 max-w-4xl mx-auto px-4">
-        <div className="flex justify-center border-3 border-navy rounded-3xl p-2 bg-white shadow-[4px_4px_0px_0px_#1A1A2E] space-x-2">
+        <div className={`flex justify-center p-2 bg-white space-x-2 ${
+          isKids
+            ? 'border-3 border-navy rounded-3xl shadow-[4px_4px_0px_0px_#3B0764]'
+            : 'border border-slate-200 shadow-sm rounded-2xl'
+        }`}>
           {[
             { id: 'gallery', label: '📸 Gallery' },
             { id: 'blog', label: '📝 Blog' },
@@ -266,10 +295,15 @@ export default function MediaCorner() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 py-3 text-sm md:text-base font-accent rounded-2xl transition-all duration-200 ${activeTab === tab.id
-                ? 'bg-coral text-white shadow-[2px_2px_0px_0px_#1A1A2E] border-2 border-navy'
-                : 'bg-transparent text-navy hover:bg-cream/50'
-                }`}
+              className={`flex-1 py-3 text-sm md:text-base rounded-2xl transition-all duration-200 ${
+                isKids
+                  ? activeTab === tab.id
+                    ? 'bg-plum text-white shadow-[2px_2px_0px_0px_#3B0764] border-2 border-navy font-accent'
+                    : 'bg-transparent text-navy hover:bg-cream/50 font-accent'
+                  : activeTab === tab.id
+                    ? 'bg-slate-900 text-white font-sans font-semibold border border-slate-900'
+                    : 'bg-transparent text-slate-650 hover:bg-slate-100 font-sans font-semibold'
+              }`}
             >
               {tab.label}
             </button>
@@ -286,10 +320,15 @@ export default function MediaCorner() {
               <button
                 key={filter}
                 onClick={() => setGalleryFilter(filter)}
-                className={`px-4 py-1.5 rounded-full border-2 font-accent text-xs sm:text-sm shadow-[2px_2px_0px_0px_#1A1A2E] transition-all ${galleryFilter === filter
-                  ? 'bg-sunshine border-navy text-navy'
-                  : 'bg-white border-navy/30 text-navy/70 hover:border-navy hover:text-navy'
-                  }`}
+                className={
+                  isKids
+                    ? `px-4 py-1.5 rounded-full border-2 font-accent text-xs sm:text-sm shadow-[2px_2px_0px_0px_#3B0764] transition-all ${
+                        galleryFilter === filter ? 'bg-gold border-navy text-navy' : 'bg-white border-navy/30 text-navy/70 hover:border-navy hover:text-navy'
+                      }`
+                    : `px-4 py-1.5 rounded-full border font-sans font-semibold text-xs sm:text-sm shadow-sm transition-all bg-white ${
+                        galleryFilter === filter ? 'bg-slate-900 border-slate-900 text-white' : 'border-slate-200 text-slate-600 hover:border-slate-400 hover:text-slate-950'
+                      }`
+                }
               >
                 {filter}
               </button>
@@ -326,25 +365,35 @@ export default function MediaCorner() {
             {blogPosts.map((post, idx) => (
               <div
                 key={post.id}
-                className={`bg-white border-3 border-navy rounded-3xl overflow-hidden shadow-[6px_6px_0px_0px_#1A1A2E] flex flex-col justify-between hover:translate-y-[-4px] hover:shadow-[8px_8px_0px_0px_#1A1A2E] transition-all ${post.color} border-t-[8px]`}
+                className={
+                  isKids
+                    ? `bg-white border-3 border-navy rounded-3xl overflow-hidden shadow-[6px_6px_0px_0px_#3B0764] flex flex-col justify-between hover:translate-y-[-4px] hover:shadow-[8px_8px_0px_0px_#3B0764] transition-all ${post.color} border-t-[8px]`
+                    : `bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between hover:translate-y-[-2px] hover:shadow-md transition-all ${post.color} border-t-[4px]`
+                }
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
                 <div>
-                  <div className="w-full h-48 border-b-2 border-navy overflow-hidden relative">
+                  <div className={`w-full h-48 overflow-hidden relative ${isKids ? 'border-b-2 border-navy' : 'border-b border-slate-100'}`}>
                     <img src={post.img} alt={post.title} className="w-full h-full object-cover" />
 
                     {/* Rotated Category Tag */}
                     <div className="absolute top-4 left-4">
-                      <StickerBadge text={post.category} color={post.badgeColor} rotate="-2deg" className="py-1 px-3 text-xs" />
+                      {isKids ? (
+                        <StickerBadge text={post.category} color={post.badgeColor} rotate="-2deg" className="py-1 px-3 text-xs" />
+                      ) : (
+                        <span className="inline-block px-3 py-1 bg-slate-900/80 backdrop-blur-sm text-white text-xs font-semibold rounded-md border border-slate-700">
+                          {post.category}
+                        </span>
+                      )}
                     </div>
                   </div>
 
                   <div className="p-5 space-y-3">
-                    <span className="text-xs text-navy/50 font-bold block">{post.date}</span>
-                    <h2 className="font-display font-extrabold text-navy text-xl hover:text-coral transition-colors leading-tight">
+                    <span className={`text-xs block ${isKids ? 'text-navy/50 font-bold' : 'text-slate-400 font-medium'}`}>{post.date}</span>
+                    <h2 className={`text-xl hover:text-violet transition-colors leading-tight ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>
                       <Link to={`/media/blog/${post.id}`}>{post.title}</Link>
                     </h2>
-                    <p className="text-sm text-navy/70 line-clamp-3 font-semibold leading-relaxed">
+                    <p className={`text-sm line-clamp-3 leading-relaxed ${isKids ? 'text-navy/70 font-semibold' : 'text-slate-600 font-normal'}`}>
                       {post.excerpt}
                     </p>
                   </div>
@@ -353,7 +402,11 @@ export default function MediaCorner() {
                 <div className="p-5 pt-0">
                   <Link
                     to={`/media/blog/${post.id}`}
-                    className="w-full py-2 bg-transparent hover:bg-coral border-2 border-navy text-navy hover:text-white font-accent text-xs rounded-xl flex items-center justify-center shadow-[2px_2px_0px_0px_#1A1A2E] hover:translate-y-[-1px] transition-all"
+                    className={
+                      isKids
+                        ? "w-full py-2 bg-transparent hover:bg-violet border-2 border-navy text-navy hover:text-white font-accent text-xs rounded-xl flex items-center justify-center shadow-[2px_2px_0px_0px_#3B0764] hover:translate-y-[-1px] transition-all"
+                        : "w-full py-2 bg-transparent hover:bg-slate-900 border border-slate-250 text-slate-650 hover:text-white font-sans font-semibold text-xs rounded-lg flex items-center justify-center shadow-sm hover:translate-y-[-0.5px] transition-all"
+                    }
                   >
                     Read Article ➔
                   </Link>
@@ -368,18 +421,18 @@ export default function MediaCorner() {
       {activeTab === 'parents' && (
         <section className="max-w-7xl mx-auto px-4 pb-20">
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="text-3xl font-display font-extrabold text-navy">
+            <h2 className={`text-3xl ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>
               Straight from the Hearts of Our School Families 💛
             </h2>
-            <p className="text-navy/70 mt-2 font-medium">
+            <p className={`mt-2 ${isKids ? 'text-navy/70 font-medium' : 'text-slate-650 font-normal'}`}>
               Read verified reviews from parents about their child's happiness, safety, and development.
             </p>
           </div>
 
           {/* Infinite Scroll Top Marquee of stars */}
-          <div className="bg-white border-y-2 border-navy py-3.5 mb-12 overflow-hidden leading-[0]">
+          <div className={`border-y py-3.5 mb-12 overflow-hidden leading-[0] ${isKids ? 'bg-white border-navy-2' : 'bg-white border-slate-205'}`}>
             <div className="marquee-container select-none">
-              <div className="marquee-content flex items-center space-x-8 font-accent text-sm text-navy">
+              <div className={`marquee-content flex items-center space-x-8 text-sm ${isKids ? 'font-accent text-navy' : 'font-sans font-semibold text-slate-600'}`}>
                 <span>⭐⭐⭐⭐⭐ Top Rated on Google Maps</span>
                 <span>⭐⭐⭐⭐⭐ Best Montessori in Ahmedabad</span>
                 <span>⭐⭐⭐⭐⭐ Certified Safe & Secure School</span>
@@ -398,25 +451,33 @@ export default function MediaCorner() {
             {parentReviews.map((rev, idx) => (
               <div
                 key={idx}
-                className={`border-3 border-navy rounded-3xl p-6 shadow-[6px_6px_0px_0px_#1A1A2E] hover:translate-y-[-4px] hover:shadow-[8px_8px_0px_0px_#1A1A2E] transition-all flex flex-col justify-between ${rev.bg} hover:ring-2 hover:ring-coral/20`}
+                className={
+                  isKids
+                    ? `border-3 border-navy rounded-3xl p-6 shadow-[6px_6px_0px_0px_#3B0764] hover:translate-y-[-4px] hover:shadow-[8px_8px_0px_0px_#3B0764] transition-all flex flex-col justify-between ${rev.bg} hover:ring-2 hover:ring-plum/20`
+                    : `border border-slate-200 rounded-2xl p-6 shadow-sm hover:translate-y-[-2px] hover:shadow-md transition-all flex flex-col justify-between bg-white hover:ring-1 hover:ring-slate-350`
+                }
               >
                 <div className="space-y-4">
                   {/* Stars */}
                   <div className="flex space-x-1">
                     {Array.from({ length: rev.stars }).map((_, i) => (
-                      <span key={i} className="text-coral text-lg">★</span>
+                      <span key={i} className="text-plum text-lg">★</span>
                     ))}
                   </div>
 
                   {/* Quote */}
-                  <p className="text-sm md:text-base text-navy font-semibold italic leading-relaxed">
+                  <p className={`text-sm md:text-base italic leading-relaxed ${isKids ? 'text-navy font-semibold' : 'text-slate-600 font-normal'}`}>
                     "{rev.quote}"
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-navy/10 flex justify-between items-center">
-                  <span className="font-display font-bold text-navy text-sm">{rev.parent}</span>
-                  <span className="px-2.5 py-0.5 bg-white border border-navy/30 rounded-full font-accent text-[10px] text-navy shadow-[1px_1px_0px_0px_rgba(26,26,46,0.1)]">
+                <div className={`mt-6 pt-4 border-t flex justify-between items-center ${isKids ? 'border-navy/10' : 'border-slate-100'}`}>
+                  <span className={`font-bold text-sm ${isKids ? 'font-display text-navy' : 'font-sans text-slate-800'}`}>{rev.parent}</span>
+                  <span className={
+                    isKids
+                      ? "px-2.5 py-0.5 bg-white border border-navy/30 rounded-full font-accent text-[10px] text-navy shadow-[1px_1px_0px_0px_rgba(59, 7, 100,0.1)]"
+                      : "px-2.5 py-0.5 bg-slate-50 border border-slate-200 rounded-md font-sans text-[10px] text-slate-500"
+                  }>
                     {rev.childClass}
                   </span>
                 </div>

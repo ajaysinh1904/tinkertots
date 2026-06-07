@@ -19,7 +19,7 @@ export default function BlogDetail() {
       <div className="bg-cream min-h-screen flex flex-col items-center justify-center py-20 px-4">
         <h1 className="text-3xl font-display font-extrabold text-navy">Article Not Found</h1>
         <p className="text-navy/70 mt-2">The blog post you are looking for does not exist.</p>
-        <Link to="/media" className="mt-6 px-6 py-2.5 bg-coral text-white font-accent rounded-xl border-2 border-navy">
+        <Link to="/media" className="mt-6 px-6 py-2.5 bg-plum text-white font-accent rounded-xl border-2 border-navy">
           Back to Media Corner ➔
         </Link>
       </div>
@@ -31,8 +31,8 @@ export default function BlogDetail() {
       {/* 1. BREADCRUMBS & ARTICLE HEADER */}
       <section className="py-12 px-4 max-w-4xl mx-auto">
         <div className="text-sm font-bold text-navy/60 mb-6 flex flex-wrap gap-1">
-          <Link to="/" className="hover:text-coral transition-colors">Home</Link> &gt; 
-          <Link to="/media" className="hover:text-coral transition-colors">Media Corner</Link> &gt; 
+          <Link to="/" className="hover:text-violet transition-colors">Home</Link> &gt; 
+          <Link to="/media" className="hover:text-violet transition-colors">Media Corner</Link> &gt; 
           <span className="text-navy truncate max-w-[200px] sm:max-w-xs">{post.title}</span>
         </div>
 
@@ -51,7 +51,7 @@ export default function BlogDetail() {
 
       {/* 2. FULL-WIDTH HERO IMAGE */}
       <section className="max-w-5xl mx-auto px-4 mb-12">
-        <div className="w-full h-[300px] sm:h-[450px] border-3 border-navy rounded-[32px] overflow-hidden shadow-[8px_8px_0px_0px_#1A1A2E] bg-white">
+        <div className="w-full h-[300px] sm:h-[450px] border-3 border-navy rounded-[32px] overflow-hidden shadow-[8px_8px_0px_0px_#3B0764] bg-white">
           <img
             src={post.img}
             alt={post.title}
@@ -73,7 +73,7 @@ export default function BlogDetail() {
           Using real Montessori phonic cylinders, sand boards, and geometric shapes, children engage their sense of touch alongside hearing. Research in pediatric growth highlights that tactile feedback directly builds long-term spatial and linguistic memory. Sandbox play, clay modeling, and sorting seeds aren't just games—they form the structural basis of logic and division!
         </p>
 
-        <blockquote className="bg-yellow-50/70 border-l-4 border-l-sunshine p-5 rounded-2xl border-2 border-navy/25 my-8 text-sm sm:text-base font-semibold italic">
+        <blockquote className="bg-yellow-50/70 border-l-4 border-l-gold p-5 rounded-2xl border-2 border-navy/25 my-8 text-sm sm:text-base font-semibold italic">
           "Education is a natural process carried out by the child and is not acquired by listening to words but by experiences in the environment." — Dr. Maria Montessori
         </blockquote>
 
@@ -92,7 +92,7 @@ export default function BlogDetail() {
         <div className="pt-8 flex justify-center md:justify-start">
           <button
             onClick={() => navigate('/media')}
-            className="px-6 py-3 bg-white hover:bg-cream text-navy font-accent text-sm rounded-xl border-2 border-navy shadow-[4px_4px_0px_0px_#1A1A2E] hover:translate-y-[-1px] transition-all"
+            className="px-6 py-3 bg-white hover:bg-cream text-navy font-accent text-sm rounded-xl border-2 border-navy shadow-[4px_4px_0px_0px_#3B0764] hover:translate-y-[-1px] transition-all"
           >
             ← Back to Media Corner
           </button>

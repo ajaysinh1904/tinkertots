@@ -91,10 +91,10 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-[24px] left-[24px] z-[999] font-body">
-      {/* Tooltip */}
+    <div className="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 z-[999] font-body">
+      {/* Tooltip (hidden on small screens) */}
       {!isOpen && (
-        <div className="absolute bottom-[72px] left-0 bg-white text-navy font-bold text-xs px-3 py-1.5 border-2 border-navy rounded-lg shadow-[2px_2px_0px_0px_#1A1A2E] whitespace-nowrap animate-bounce">
+        <div className="absolute bottom-[72px] left-0 bg-white text-navy font-bold text-xs px-3 py-1.5 border-2 border-navy rounded-lg shadow-[2px_2px_0px_0px_#3B0764] whitespace-nowrap animate-bounce hidden sm:block">
           Ask Toots! 🦉
         </div>
       )}
@@ -102,8 +102,8 @@ export default function ChatWidget() {
       {/* Pulsing Notification Dot */}
       {showDot && (
         <span className="absolute top-0 right-0 flex h-4 w-4 z-[1000]">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-4 w-4 bg-coral"></span>
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-plum opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-4 w-4 bg-plum"></span>
         </span>
       )}
 
@@ -111,19 +111,19 @@ export default function ChatWidget() {
       <button
         onClick={handleToggle}
         aria-label="Toggle chatbot"
-        className="w-[56px] h-[56px] flex items-center justify-center bg-coral text-white rounded-full border-2 border-navy shadow-[4px_4px_0px_0px_#1A1A2E] hover:scale-105 active:scale-95 transition-transform duration-200"
+        className="w-[56px] h-[56px] flex items-center justify-center bg-plum text-white rounded-full border-2 border-navy shadow-[4px_4px_0px_0px_#3B0764] hover:scale-105 active:scale-95 transition-transform duration-200"
       >
         <span className="text-2xl">🦉</span>
       </button>
 
       {/* Chat Window */}
       <div
-        className={`absolute bottom-[72px] left-0 w-[300px] h-[420px] bg-white border-3 border-navy rounded-2xl shadow-[6px_6px_0px_0px_#1A1A2E] flex flex-col overflow-hidden transition-all duration-300 origin-bottom-left ${
+        className={`absolute bottom-[72px] left-0 w-[calc(100vw-32px)] sm:w-[300px] h-[390px] sm:h-[420px] bg-white border-3 border-navy rounded-2xl shadow-[6px_6px_0px_0px_#3B0764] flex flex-col overflow-hidden transition-all duration-300 origin-bottom-left ${
           isOpen ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-0 opacity-0 pointer-events-none'
         }`}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-coral to-sunshine px-4 py-3 border-b-2 border-navy flex items-center justify-between">
+        <div className="bg-gradient-to-r from-plum to-gold px-4 py-3 border-b-2 border-navy flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-white border border-navy rounded-full flex items-center justify-center p-0.5 overflow-hidden">
               <TootsMascot size={32} />
@@ -131,14 +131,14 @@ export default function ChatWidget() {
             <div>
               <h4 className="text-navy font-display font-bold text-sm tracking-wide">Toots</h4>
               <div className="flex items-center space-x-1">
-                <span className="w-2 h-2 bg-mint rounded-full animate-pulse"></span>
+                <span className="w-2 h-2 bg-blush rounded-full animate-pulse"></span>
                 <span className="text-[10px] text-navy/70 font-semibold">School Guide</span>
               </div>
             </div>
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="text-navy hover:text-coral font-bold text-lg leading-none"
+            className="text-navy hover:text-violet font-bold text-lg leading-none"
             aria-label="Close chat"
           >
             ✕
@@ -155,10 +155,10 @@ export default function ChatWidget() {
               }`}
             >
               <div
-                className={`px-3 py-2 text-sm rounded-2xl border-2 border-navy shadow-[2px_2px_0px_0px_rgba(26,26,46,0.1)] ${
+                className={`px-3 py-2 text-sm rounded-2xl border-2 border-navy shadow-[2px_2px_0px_0px_rgba(59, 7, 100,0.1)] ${
                   m.sender === 'user'
-                    ? 'bg-coral text-white rounded-tr-none'
-                    : 'bg-white text-navy rounded-tl-none border-l-4 border-l-coral'
+                    ? 'bg-plum text-white rounded-tr-none'
+                    : 'bg-white text-navy rounded-tl-none border-l-4 border-l-plum'
                 }`}
               >
                 {m.text}
@@ -185,7 +185,7 @@ export default function ChatWidget() {
               <button
                 key={chip}
                 onClick={() => handleChipClick(chip)}
-                className="text-[11px] font-bold px-2 py-1 bg-white border border-navy rounded-full hover:bg-sunshine active:bg-sunshine transition-colors duration-150 shadow-[1px_1px_0px_0px_#1A1A2E]"
+                className="text-[11px] font-bold px-2 py-1 bg-white border border-navy rounded-full hover:bg-amber active:bg-gold transition-colors duration-150 shadow-[1px_1px_0px_0px_#3B0764]"
               >
                 {chip}
               </button>
@@ -200,12 +200,12 @@ export default function ChatWidget() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 text-xs px-3 py-2 bg-cream/40 border border-navy rounded-lg focus:outline-none focus:ring-1 focus:ring-coral text-navy placeholder-navy/40"
+            className="flex-1 text-xs px-3 py-2 bg-cream/40 border border-navy rounded-lg focus:outline-none focus:ring-1 focus:ring-plum text-navy placeholder-navy/40"
           />
           <button
             type="submit"
             aria-label="Send message"
-            className="px-3 py-2 bg-coral hover:bg-coral/90 text-white rounded-lg border border-navy shadow-[2px_2px_0px_0px_#1A1A2E] text-xs font-bold active:scale-95 transition-transform"
+            className="px-3 py-2 bg-plum hover:bg-violet/90 text-white rounded-lg border border-navy shadow-[2px_2px_0px_0px_#3B0764] text-xs font-bold active:scale-95 transition-transform"
           >
             ➔
           </button>

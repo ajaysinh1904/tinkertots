@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import useScrollReveal from '../hooks/useScrollReveal';
 import { StarDoodle, SpiralDoodle, HeartDoodle, StickerBadge } from '../components/HandDrawnDoodles';
+import { useTheme } from '../context/ThemeContext';
 
 // Reusable CountUp component for Stats
-function CountUpNumber({ end, suffix = '' }) {
+function CountUpNumber({ end, suffix = '', isDarkBg = false, isKids = true }) {
   const [count, setCount] = useState(0);
   const elementRef = useRef(null);
 
@@ -36,7 +37,13 @@ function CountUpNumber({ end, suffix = '' }) {
   }, [end]);
 
   return (
-    <span ref={elementRef} className="font-display font-extrabold text-4xl md:text-5xl text-coral">
+    <span ref={elementRef} className={
+      isKids
+        ? "font-display font-extrabold text-4xl md:text-5xl text-plum"
+        : isDarkBg
+          ? "font-sans font-bold text-4xl md:text-5xl text-white"
+          : "font-sans font-bold text-4xl md:text-5xl text-slate-800"
+    }>
       {count}{suffix}
     </span>
   );
@@ -44,6 +51,8 @@ function CountUpNumber({ end, suffix = '' }) {
 
 export default function About() {
   useScrollReveal();
+  const { theme } = useTheme();
+  const isKids = theme === 'kids';
   const [activeSlide, setActiveSlide] = useState(0);
 
   const testimonials = [
@@ -75,42 +84,56 @@ export default function About() {
   }, [testimonials.length]);
 
   return (
-    <div className="bg-cream">
+    <div className={isKids ? "bg-cream" : "bg-slate-50"}>
       
       {/* 1. HERO STORY HEADER */}
-      <section className="relative py-16 px-4 bg-gradient-to-b from-white/30 to-cream border-b-2 border-navy overflow-hidden">
+      <section className={`relative py-16 px-4 border-b transition-colors duration-300 overflow-hidden ${
+        isKids ? 'bg-gradient-to-b from-white/30 to-cream border-b-2 border-navy' : 'bg-white border-b border-slate-200'
+      }`}>
         {/* Breadcrumb */}
-        <div className="max-w-7xl mx-auto px-4 mb-4 text-sm font-bold text-navy/60">
-          <Link to="/" className="hover:text-coral transition-colors">Home</Link> &gt; <span className="text-navy">About Us</span>
+        <div className={`max-w-7xl mx-auto px-4 mb-4 text-sm font-bold ${isKids ? 'text-navy/60' : 'text-slate-400'}`}>
+          <Link to="/" className="hover:text-violet transition-colors">Home</Link> &gt; <span className={isKids ? 'text-navy' : 'text-slate-700'}>About Us</span>
         </div>
 
         {/* Floating Doodles */}
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <StarDoodle color="coral" size={28} className="absolute top-[20%] left-[8%]" />
-          <HeartDoodle color="lavender" size={32} className="absolute bottom-[20%] right-[8%] animate-bounce-light" />
-        </div>
+        {isKids && (
+          <div className="absolute inset-0 pointer-events-none opacity-20">
+            <StarDoodle color="plum" size={28} className="absolute top-[20%] left-[8%]" />
+            <HeartDoodle color="lavender" size={32} className="absolute bottom-[20%] right-[8%] animate-bounce-light" />
+          </div>
+        )}
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
           {/* Left: Heading + Story */}
           <div className="space-y-6 reveal active">
-            <StickerBadge text="Our Story 📖" color="sunshine" rotate="-2deg" className="mb-2" />
+            {isKids ? (
+              <StickerBadge text="Our Story 📖" color="gold" rotate="-2deg" className="mb-2" />
+            ) : (
+              <span className="inline-block px-4 py-1.5 bg-slate-100 text-slate-800 text-sm font-semibold rounded-full border border-slate-200 mb-2">
+                Our Story 📖
+              </span>
+            )}
             
-            <h1 className="text-4xl sm:text-5xl font-display font-extrabold text-navy leading-tight">
+            <h1 className={`text-4xl sm:text-5xl leading-tight ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-extrabold text-slate-900'}`}>
               Crafting Magical Foundations Since 2020 🌻
             </h1>
             
-            <p className="text-navy/80 font-medium text-base sm:text-lg leading-relaxed">
+            <p className={`leading-relaxed ${isKids ? 'text-navy/80 font-medium text-base sm:text-lg' : 'text-slate-600 font-normal text-base sm:text-lg'}`}>
               Tinkytots was founded by a team of Montessori specialists and parents in Jagatpur, Ahmedabad, who wanted something better than rigid traditional schools. We designed an illustrated children's book format that turns lesson plans into interactive sensory discoveries.
             </p>
 
-            <p className="text-navy/80 font-medium text-base sm:text-lg leading-relaxed">
+            <p className={`leading-relaxed ${isKids ? 'text-navy/80 font-medium text-base sm:text-lg' : 'text-slate-600 font-normal text-base sm:text-lg'}`}>
               Every child here learns through sandbox games, visual cards, tactile blocks, and outdoor garden workshops. We focus heavily on safety, hygiene, and low teacher ratios so your child is well-nourished, valued, and safe.
             </p>
           </div>
 
           {/* Right: Side image in blob frame */}
           <div className="flex justify-center reveal active">
-            <div className="w-[300px] sm:w-[420px] h-[300px] sm:h-[420px] overflow-hidden border-3 border-navy rounded-[30%_70%_70%_30%/_50%_60%_40%_50%] animate-blob-morph shadow-[8px_8px_0px_0px_#1A1A2E]">
+            <div className={
+              isKids
+                ? "w-[300px] sm:w-[420px] h-[300px] sm:h-[420px] overflow-hidden border-3 border-navy rounded-[30%_70%_70%_30%/_50%_60%_40%_50%] animate-blob-morph shadow-[8px_8px_0px_0px_#3B0764]"
+                : "w-[300px] sm:w-[420px] h-[300px] sm:h-[420px] overflow-hidden border border-slate-200 rounded-3xl shadow-lg bg-white"
+            }>
               <img
                 src="https://picsum.photos/seed/tinkertots-children-story/500/500"
                 alt="Children reading books together at Tinkytots"
@@ -126,23 +149,23 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Vision Card */}
-          <div className="bg-skyblue/10 border-3 border-navy p-8 rounded-3xl relative overflow-hidden shadow-[6px_6px_0px_0px_#1A1A2E] reveal">
+          <div className={`p-8 rounded-3xl relative overflow-hidden reveal ${isKids ? 'bg-lilac/10 border-3 border-navy shadow-[6px_6px_0px_0px_#3B0764]' : 'bg-white border border-slate-200 shadow-sm rounded-2xl'}`}>
             {/* Organic Sky Blue Blob Backdrop */}
-            <div className="absolute inset-[-40px] bg-skyblue/10 rounded-[60%_40%_30%_70%/_60%_30%_70%_40%] animate-blob-morph -z-10" />
+            {isKids && <div className="absolute inset-[-40px] bg-lilac/10 rounded-[60%_40%_30%_70%/_60%_30%_70%_40%] animate-blob-morph -z-10" />}
             <div className="text-4xl mb-4">🌟</div>
-            <h2 className="text-2xl font-display font-extrabold text-navy mb-4">Our Vision</h2>
-            <p className="text-navy/80 font-semibold leading-relaxed">
+            <h2 className={`text-2xl mb-4 ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>Our Vision</h2>
+            <p className={`leading-relaxed ${isKids ? 'text-navy/80 font-semibold' : 'text-slate-600 font-normal'}`}>
               To be the most trustworthy and joyful preschool in Ahmedabad, helping children develop cognitive independence, values of kindness, and a lifelong curiosity for learning.
             </p>
           </div>
 
           {/* Mission Card */}
-          <div className="bg-red-50/70 border-3 border-navy p-8 rounded-3xl relative overflow-hidden shadow-[6px_6px_0px_0px_#1A1A2E] reveal">
+          <div className={`p-8 rounded-3xl relative overflow-hidden reveal ${isKids ? 'bg-red-50/70 border-3 border-navy shadow-[6px_6px_0px_0px_#3B0764]' : 'bg-white border border-slate-200 shadow-sm rounded-2xl'}`}>
             {/* Organic Coral Blob Backdrop */}
-            <div className="absolute inset-[-40px] bg-coral/10 rounded-[40%_60%_50%_50%/_50%_40%_60%_50%] animate-blob-morph -z-10" />
+            {isKids && <div className="absolute inset-[-40px] bg-plum/10 rounded-[40%_60%_50%_50%/_50%_40%_60%_50%] animate-blob-morph -z-10" />}
             <div className="text-4xl mb-4">🚀</div>
-            <h2 className="text-2xl font-display font-extrabold text-navy mb-4">Our Mission</h2>
-            <p className="text-navy/80 font-semibold leading-relaxed">
+            <h2 className={`text-2xl mb-4 ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>Our Mission</h2>
+            <p className={`leading-relaxed ${isKids ? 'text-navy/80 font-semibold' : 'text-slate-600 font-normal'}`}>
               To design safety-first, illustrated, activity-based Montessori learning environments where low ratios, trained teachers, and parent partnerships enable healthy child development.
             </p>
           </div>
@@ -151,20 +174,24 @@ export default function About() {
       </section>
 
       {/* WAVE DIVIDER */}
-      <div className="w-full overflow-hidden leading-[0] bg-cream">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[40px] text-white fill-current">
-          <path d="M0,0 C150,90 350,120 600,60 C850,0 1050,30 1200,90 L1200,120 L0,120 Z" />
-        </svg>
-      </div>
+      {isKids ? (
+        <div className="w-full overflow-hidden leading-[0] bg-cream">
+          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[40px] text-white fill-current">
+            <path d="M0,0 C150,90 350,120 600,60 C850,0 1050,30 1200,90 L1200,120 L0,120 Z" />
+          </svg>
+        </div>
+      ) : (
+        <div className="h-8 bg-slate-50 border-b border-slate-200/50" />
+      )}
 
       {/* 3. OUR VALUES */}
-      <section className="py-20 px-4 bg-white relative z-10">
+      <section className={`py-20 px-4 relative z-10 ${isKids ? 'bg-white' : 'bg-slate-50'}`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16 reveal">
-            <h2 className="text-3xl sm:text-4.5xl font-display font-extrabold text-navy">
+            <h2 className={`text-3xl sm:text-4.5xl ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>
               Values We Plant in Our Garden 🌱
             </h2>
-            <p className="text-navy/70 mt-2 font-medium">
+            <p className={`mt-2 ${isKids ? 'text-navy/70 font-medium' : 'text-slate-600 font-normal'}`}>
               We practice six core values every day to ensure child growth and parent peace of mind.
             </p>
           </div>
@@ -180,13 +207,17 @@ export default function About() {
             ].map((val, idx) => (
               <div
                 key={idx}
-                className={`border-3 border-navy rounded-3xl p-6 shadow-[4px_4px_0px_0px_#1A1A2E] flex flex-col space-y-3 transition-transform hover:scale-103 reveal ${val.color}`}
-                style={{ transform: `rotate(${val.rot})`, transitionDelay: `${idx * 75}ms` }}
+                className={
+                  isKids
+                    ? `border-3 border-navy rounded-3xl p-6 shadow-[4px_4px_0px_0px_#3B0764] flex flex-col space-y-3 transition-transform hover:scale-103 reveal ${val.color}`
+                    : `border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col space-y-3 hover:scale-101 hover:shadow-md transition-all bg-white reveal`
+                }
+                style={isKids ? { transform: `rotate(${val.rot})`, transitionDelay: `${idx * 75}ms` } : { transitionDelay: `${idx * 75}ms` }}
               >
-                <h3 className="text-xl font-display font-extrabold text-navy">
+                <h3 className={`text-xl ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-850'}`}>
                   {val.title}
                 </h3>
-                <p className="text-sm text-navy/70 font-semibold leading-relaxed">
+                <p className={`text-sm leading-relaxed ${isKids ? 'text-navy/70 font-semibold' : 'text-slate-600 font-normal'}`}>
                   {val.desc}
                 </p>
               </div>
@@ -196,19 +227,23 @@ export default function About() {
       </section>
 
       {/* WAVE DIVIDER */}
-      <div className="w-full overflow-hidden leading-[0] bg-white">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[40px] text-cream fill-current">
-          <path d="M0,0 C150,90 350,120 600,60 C850,0 1050,30 1200,90 L1200,120 L0,120 Z" />
-        </svg>
-      </div>
+      {isKids ? (
+        <div className="w-full overflow-hidden leading-[0] bg-white">
+          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[40px] text-cream fill-current">
+            <path d="M0,0 C150,90 350,120 600,60 C850,0 1050,30 1200,90 L1200,120 L0,120 Z" />
+          </svg>
+        </div>
+      ) : (
+        <div className="h-8 bg-white border-t border-slate-200/50" />
+      )}
 
       {/* 4. LEADERSHIP TEAM */}
       <section className="py-20 px-4 max-w-7xl mx-auto relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-16 reveal">
-          <h2 className="text-3xl sm:text-4.5xl font-display font-extrabold text-navy">
-            Our Loving Leaders & Guides 🦉
+          <h2 className={`text-3xl sm:text-4.5xl ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>
+            {isKids ? 'Our Loving Leaders & Guides 🦉' : 'Our Leadership & Faculty'}
           </h2>
-          <p className="text-navy/70 mt-2 font-medium">
+          <p className={`mt-2 ${isKids ? 'text-navy/70 font-medium' : 'text-slate-600 font-normal'}`}>
             Meet our directors and program guides committed to giving your child the best foundation.
           </p>
         </div>
@@ -236,11 +271,15 @@ export default function About() {
           ].map((member, idx) => (
             <div
               key={idx}
-              className="bg-white border-3 border-navy rounded-3xl p-6 flex flex-col items-center text-center shadow-[6px_6px_0px_0px_#1A1A2E] hover:scale-102 transition-transform duration-200 reveal"
+              className={
+                isKids
+                  ? "bg-white border-3 border-navy rounded-3xl p-6 flex flex-col items-center text-center shadow-[6px_6px_0px_0px_#3B0764] hover:scale-102 transition-transform duration-200 reveal"
+                  : "bg-white border border-slate-200 rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:scale-101 hover:shadow-md transition-all duration-200 reveal"
+              }
               style={{ transitionDelay: `${idx * 150}ms` }}
             >
-              {/* Photo placeholder with lavender ring */}
-              <div className="w-32 h-32 rounded-full p-1 border-4 border-lavender overflow-hidden shadow-inner mb-4">
+              {/* Photo placeholder */}
+              <div className={`w-32 h-32 rounded-full p-1 overflow-hidden shadow-inner mb-4 ${isKids ? 'border-4 border-lavender' : 'border border-slate-200'}`}>
                 <img
                   src={member.img}
                   alt={member.name}
@@ -248,15 +287,19 @@ export default function About() {
                 />
               </div>
 
-              <h3 className="text-xl font-display font-extrabold text-navy">
+              <h3 className={`text-xl ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>
                 {member.name}
               </h3>
               
-              <span className="inline-block px-3 py-1 bg-skyblue/10 text-navy font-accent text-xs border border-navy/30 rounded-full mt-1.5 mb-3">
+              <span className={
+                isKids
+                  ? "inline-block px-3 py-1 bg-lilac/10 text-navy font-accent text-xs border border-navy/30 rounded-full mt-1.5 mb-3"
+                  : "inline-block px-3 py-1 bg-slate-100 text-slate-700 font-sans text-xs font-semibold border border-slate-200 rounded-md mt-1.5 mb-3"
+              }>
                 {member.role}
               </span>
 
-              <p className="text-sm text-navy/70 font-medium leading-relaxed mb-4">
+              <p className={`text-sm leading-relaxed mb-4 ${isKids ? 'text-navy/70 font-medium' : 'text-slate-600 font-normal'}`}>
                 {member.bio}
               </p>
 
@@ -265,7 +308,9 @@ export default function About() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-accent text-navy hover:text-coral transition-colors flex items-center"
+                className={`text-xs transition-colors flex items-center ${
+                  isKids ? 'font-accent text-navy hover:text-violet' : 'font-sans font-semibold text-slate-500 hover:text-slate-800'
+                }`}
               >
                 LinkedIn profile ➔
               </a>
@@ -275,7 +320,7 @@ export default function About() {
       </section>
 
       {/* 5. STATS BAND (Reused) */}
-      <section className="relative py-16 px-4 bg-gradient-to-br from-coral via-[#FF8E53] to-sunshine border-y-3 border-navy z-20 overflow-hidden">
+      <section className={`relative py-16 px-4 z-20 overflow-hidden transition-all ${isKids ? 'bg-gradient-to-br from-plum via-[#FF8E53] to-gold border-y-3 border-navy' : 'bg-slate-900 border-y border-slate-800'}`}>
         <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
           {[
             { end: 5500, label: 'Sq.ft Campus 🏫', suffix: '+' },
@@ -285,10 +330,14 @@ export default function About() {
           ].map((stat, idx) => (
             <div
               key={idx}
-              className="bg-white border-2 border-navy rounded-2xl p-5 flex flex-col items-center text-center shadow-[4px_4px_0px_0px_#1A1A2E]"
+              className={`p-5 flex flex-col items-center text-center transition-transform duration-200 ${
+                isKids 
+                  ? 'bg-white border-2 border-navy rounded-2xl shadow-[4px_4px_0px_0px_#3B0764] hover:scale-103' 
+                  : 'bg-slate-800/80 border border-slate-700/50 rounded-xl shadow-sm hover:scale-101'
+              }`}
             >
-              <CountUpNumber end={stat.end} suffix={stat.suffix} />
-              <span className="text-xs sm:text-sm font-accent text-navy mt-2 leading-tight">
+              <CountUpNumber end={stat.end} suffix={stat.suffix} isDarkBg={!isKids} isKids={isKids} />
+              <span className={`text-xs sm:text-sm mt-2 leading-tight ${isKids ? 'font-accent text-navy' : 'font-sans font-semibold text-slate-350'}`}>
                 {stat.label}
               </span>
             </div>
@@ -299,39 +348,45 @@ export default function About() {
       {/* 6. TESTIMONIALS AUTO-SLIDER */}
       <section className="py-20 px-4 max-w-5xl mx-auto relative z-10">
         <div className="text-center max-w-xl mx-auto mb-12 reveal">
-          <h2 className="text-3xl sm:text-4.5xl font-display font-extrabold text-navy">
+          <h2 className={`text-3xl sm:text-4.5xl ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>
             Hearts of Our School Families 💛
           </h2>
         </div>
 
         {/* Carousel slide window */}
-        <div className="relative overflow-hidden min-h-[220px] bg-yellow-50/70 border-3 border-navy rounded-3xl p-6 md:p-10 shadow-[6px_6px_0px_0px_#1A1A2E] flex flex-col justify-between reveal">
+        <div className={`relative overflow-hidden min-h-[220px] p-6 md:p-10 flex flex-col justify-between reveal ${
+          isKids 
+            ? 'bg-yellow-50/70 border-3 border-navy rounded-3xl shadow-[6px_6px_0px_0px_#3B0764]' 
+            : 'bg-white border border-slate-200 rounded-2xl shadow-sm'
+        }`}>
           {/* Big decorative quote mark */}
-          <div className="absolute top-2 left-4 text-7xl md:text-8xl text-sunshine/30 font-accent select-none pointer-events-none">
-            “
-          </div>
+          {isKids && (
+            <div className="absolute top-2 left-4 text-7xl md:text-8xl text-gold/30 font-accent select-none pointer-events-none">
+              “
+            </div>
+          )}
 
           <div className="relative z-10 space-y-4">
             {/* Stars */}
             <div className="flex space-x-1 justify-center md:justify-start">
               {Array.from({ length: testimonials[activeSlide].stars }).map((_, i) => (
-                <span key={i} className="text-sunshine text-xl">★</span>
+                <span key={i} className="text-gold text-xl">★</span>
               ))}
             </div>
 
             {/* Testimonial Quote */}
-            <p className="text-base sm:text-lg md:text-xl text-navy italic font-semibold leading-relaxed text-center md:text-left transition-all duration-300">
+            <p className={`text-base sm:text-lg md:text-xl italic font-semibold leading-relaxed text-center md:text-left transition-all duration-300 ${isKids ? 'text-navy' : 'text-slate-700'}`}>
               "{testimonials[activeSlide].quote}"
             </p>
           </div>
 
           {/* Author info */}
-          <div className="pt-4 border-t border-navy/10 flex flex-col sm:flex-row justify-between items-center relative z-10 text-center sm:text-left">
+          <div className={`pt-4 border-t flex flex-col sm:flex-row justify-between items-center relative z-10 text-center sm:text-left ${isKids ? 'border-navy/10' : 'border-slate-100'}`}>
             <div>
-              <h4 className="font-display font-extrabold text-navy text-base">
+              <h4 className={`font-base ${isKids ? 'font-display font-extrabold text-navy text-base' : 'font-sans font-bold text-slate-800 text-base'}`}>
                 {testimonials[activeSlide].author}
               </h4>
-              <p className="text-xs text-navy/60 font-bold">
+              <p className={`text-xs ${isKids ? 'text-navy/60 font-bold' : 'text-slate-500 font-medium'}`}>
                 Parent of {testimonials[activeSlide].child}
               </p>
             </div>
@@ -342,9 +397,9 @@ export default function About() {
                 <button
                   key={idx}
                   onClick={() => setActiveSlide(idx)}
-                  className={`w-3.5 h-3.5 rounded-full border border-navy transition-colors ${
-                    activeSlide === idx ? 'bg-coral' : 'bg-white'
-                  }`}
+                  className={`w-3.5 h-3.5 rounded-full border transition-colors ${
+                    isKids ? 'border-navy' : 'border-slate-350'
+                  } ${activeSlide === idx ? (isKids ? 'bg-plum' : 'bg-slate-800') : 'bg-white'}`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}

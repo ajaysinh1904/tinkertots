@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 export default function Confetti() {
   const pieces = useMemo(() => {
-    const colors = ['#FFD93D', '#FF6B6B', '#74C0FC', '#B197FC', '#69DB7C'];
+    const colors = ['#F5B800', '#7B2D8B', '#C026D3', '#E9D5F5', '#C084FC', '#F0ABFC'];
     return Array.from({ length: 40 }).map((_, i) => {
       // Calculate random polar coordinates, then convert to rectangular for translation vectors
       const angle = Math.random() * Math.PI * 2;

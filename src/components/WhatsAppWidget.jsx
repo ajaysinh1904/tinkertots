@@ -6,9 +6,9 @@ export default function WhatsAppWidget() {
   const href = `https://wa.me/${whatsappNumber}?text=${textMessage}`;
 
   return (
-    <div className="fixed bottom-[88px] right-[24px] z-[999] group flex items-center justify-end">
-      {/* Tooltip (slides left on hover) */}
-      <span className="mr-3 px-3 py-1.5 text-xs font-bold text-navy bg-white border-2 border-navy rounded-lg shadow-[2px_2px_0px_0px_#1A1A2E] whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+    <div className="fixed bottom-[80px] md:bottom-[88px] right-4 md:right-6 z-[999] group flex items-center justify-end">
+      {/* Tooltip (hidden on small touchscreens to avoid blocking taps) */}
+      <span className="mr-3 px-3 py-1.5 text-xs font-bold text-navy bg-white border-2 border-navy rounded-lg shadow-[2px_2px_0px_0px_#3B0764] whitespace-nowrap opacity-0 pointer-events-none translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 hidden sm:inline-block">
         Chat with us on WhatsApp 💬
       </span>
 
@@ -18,7 +18,7 @@ export default function WhatsAppWidget() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
-        className="w-[56px] h-[56px] flex items-center justify-center bg-[#25D366] text-white rounded-full border-2 border-navy shadow-[4px_4px_0px_0px_#1A1A2E] hover:scale-105 active:scale-95 transition-transform duration-200 pulse-ring"
+        className="w-[56px] h-[56px] flex items-center justify-center bg-[#25D366] text-white rounded-full border-2 border-navy shadow-[4px_4px_0px_0px_#3B0764] hover:scale-105 active:scale-95 transition-transform duration-200 pulse-ring"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

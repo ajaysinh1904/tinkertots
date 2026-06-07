@@ -5,6 +5,7 @@ import useScrollReveal from '../hooks/useScrollReveal';
 import Confetti from '../components/Confetti';
 import TootsMascot from '../components/TootsMascot';
 import { StarDoodle, SpiralDoodle, StickerBadge } from '../components/HandDrawnDoodles';
+import { useTheme } from '../context/ThemeContext';
 
 const EMAILJS_SERVICE_ID = 'service_6yarmxa';
 const EMAILJS_TEMPLATE_ID = 'template_q8rt1ki';
@@ -12,6 +13,8 @@ const EMAILJS_PUBLIC_KEY = 'EK5d4-Qh-aPXFtWhE';
 
 export default function Contact() {
   useScrollReveal();
+  const { theme } = useTheme();
+  const isKids = theme === 'kids';
 
   const [form, setForm] = useState({
     fullName: '',
@@ -127,27 +130,37 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-cream min-h-screen pb-20 font-body relative">
+    <div className={`min-h-screen pb-20 relative ${isKids ? 'bg-cream' : 'bg-slate-50'}`}>
       {showConfetti && <Confetti />}
 
       {/* 1. HERO */}
-      <section className="relative py-12 px-4 bg-gradient-to-b from-white/30 to-cream border-b-2 border-navy overflow-hidden">
+      <section className={`relative py-12 px-4 border-b transition-colors duration-300 overflow-hidden ${
+        isKids ? 'bg-gradient-to-b from-white/30 to-cream border-b-2 border-navy' : 'bg-white border-b border-slate-200'
+      }`}>
         {/* Scattered Doodles */}
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <StarDoodle color="coral" size={32} className="absolute top-[20%] left-[8%] animate-spin-slow" />
-          <SpiralDoodle color="sunshine" size={36} className="absolute bottom-[20%] right-[10%] animate-float-slow" />
-        </div>
+        {isKids && (
+          <div className="absolute inset-0 pointer-events-none opacity-20">
+            <StarDoodle color="plum" size={32} className="absolute top-[20%] left-[8%] animate-spin-slow" />
+            <SpiralDoodle color="gold" size={36} className="absolute bottom-[20%] right-[10%] animate-float-slow" />
+          </div>
+        )}
 
-        <div className="max-w-7xl mx-auto px-4 mb-4 text-sm font-bold text-navy/60">
-          <Link to="/" className="hover:text-coral transition-colors">Home</Link> &gt; <span className="text-navy">Contact Us</span>
+        <div className={`max-w-7xl mx-auto px-4 mb-4 text-sm font-bold ${isKids ? 'text-navy/60' : 'text-slate-400'}`}>
+          <Link to="/" className="hover:text-violet transition-colors">Home</Link> &gt; <span className={isKids ? 'text-navy' : 'text-slate-700'}>Contact Us</span>
         </div>
 
         <div className="max-w-7xl mx-auto text-center space-y-4 relative z-10">
-          <StickerBadge text="Get In Touch 👋" color="sunshine" rotate="-2deg" className="mb-2" />
-          <h1 className="text-4xl sm:text-5xl font-display font-extrabold text-navy">
+          {isKids ? (
+            <StickerBadge text="Get In Touch 👋" color="gold" rotate="-2deg" className="mb-2" />
+          ) : (
+            <span className="inline-block px-4 py-1.5 bg-slate-100 text-slate-800 text-sm font-semibold rounded-full border border-slate-200 mb-2">
+              Get In Touch 👋
+            </span>
+          )}
+          <h1 className={`text-4xl sm:text-5xl ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>
             Let's Talk & Play! 👋
           </h1>
-          <p className="text-navy/70 max-w-xl mx-auto font-semibold">
+          <p className={`max-w-xl mx-auto ${isKids ? 'text-navy/70 font-semibold' : 'text-slate-600 font-normal'}`}>
             Have questions about admissions, school curriculum, or daycare timings? Write to us, call us, or drop by!
           </p>
         </div>
@@ -157,13 +170,17 @@ export default function Contact() {
       <section className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
 
         {/* LEFT COLUMN - INFO PANEL */}
-        <div className="lg:col-span-5 bg-coral border-3 border-navy rounded-[40px] p-8 md:p-10 text-white relative overflow-hidden shadow-[8px_8px_0px_0px_#1A1A2E] flex flex-col justify-between reveal active min-h-[450px]">
+        <div className={`lg:col-span-5 p-8 md:p-10 text-white relative overflow-hidden flex flex-col justify-between reveal active min-h-[450px] ${
+          isKids
+            ? 'bg-plum border-3 border-navy rounded-[40px] shadow-[8px_8px_0px_0px_#3B0764]'
+            : 'bg-slate-900 border border-slate-800 rounded-2xl shadow-md'
+        }`}>
           {/* Animated Background Blob */}
-          <div className="absolute inset-[-40px] bg-white/10 rounded-[60%_40%_30%_70%/_60%_30%_70%_40%] animate-blob-morph -z-10" />
+          {isKids && <div className="absolute inset-[-40px] bg-white/10 rounded-[60%_40%_30%_70%/_60%_30%_70%_40%] animate-blob-morph -z-10" />}
 
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl font-display font-extrabold text-white mb-2">Tinkytots Preschool</h2>
+              <h2 className={`text-3xl font-extrabold text-white mb-2 ${isKids ? 'font-display' : 'font-sans'}`}>Tinkytots Preschool</h2>
               <p className="text-white/80 font-medium">Jagatpur Gota Campus</p>
             </div>
 
@@ -182,7 +199,7 @@ export default function Contact() {
                 <div>
                   <p className="font-bold text-white">Call Us Directly</p>
                   <p className="mt-0.5">
-                    <a href="tel:+917624012997" className="underline hover:text-sunshine transition-colors font-medium">
+                    <a href="tel:+917624012997" className="underline hover:text-amber transition-colors font-medium">
                       +91 76240 12997
                     </a>
                   </p>
@@ -194,7 +211,7 @@ export default function Contact() {
                 <div>
                   <p className="font-bold text-white">Email Us</p>
                   <p className="mt-0.5">
-                    <a href="mailto:hello@tinkytots.com" className="underline hover:text-sunshine transition-colors font-medium">
+                    <a href="mailto:hello@tinkytots.com" className="underline hover:text-amber transition-colors font-medium">
                       hello@tinkytots.com
                     </a>
                   </p>
@@ -221,7 +238,11 @@ export default function Contact() {
                   href={`https://${soc.toLowerCase()}.com`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-white hover:bg-sunshine text-navy border-2 border-navy rounded-full flex items-center justify-center font-accent text-xs shadow-[3px_3px_0px_0px_#1A1A2E] hover:translate-y-[-2px] transition-all"
+                  className={
+                    isKids
+                      ? "w-10 h-10 bg-white hover:bg-amber text-navy border-2 border-navy rounded-full flex items-center justify-center font-accent text-xs shadow-[3px_3px_0px_0px_#3B0764] hover:translate-y-[-2px] transition-all"
+                      : "w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 rounded-lg flex items-center justify-center font-sans font-semibold text-xs shadow-sm hover:translate-y-[-1px] transition-all"
+                  }
                 >
                   {soc.substring(0, 2)}
                 </a>
@@ -231,10 +252,16 @@ export default function Contact() {
         </div>
 
         {/* RIGHT COLUMN - CONTACT FORM */}
-        <div className="lg:col-span-7 bg-white border-3 border-navy rounded-[40px] p-6 md:p-10 shadow-[8px_8px_0px_0px_#1A1A2E] reveal active">
+        <div className={`lg:col-span-7 p-6 md:p-10 reveal active ${
+          isKids
+            ? 'bg-white border-3 border-navy rounded-[40px] shadow-[8px_8px_0px_0px_#3B0764]'
+            : 'bg-white border border-slate-200 rounded-2xl shadow-sm'
+        }`}>
 
           {/* Notification for clients testing POC */}
-          <div className="bg-yellow-50 border border-navy/20 p-3 rounded-2xl mb-6 text-xs text-navy font-semibold">
+          <div className={`p-3 rounded-2xl mb-6 text-xs font-semibold ${
+            isKids ? 'bg-yellow-50 border border-navy/20 text-navy' : 'bg-slate-50 border border-slate-100 text-slate-750'
+          }`}>
             📢 **POC Note**: Submitting this form uses a simulator by default so you can view animations out-of-the-box.
           </div>
 
@@ -242,7 +269,7 @@ export default function Contact() {
 
             {/* Full Name */}
             <div className="relative">
-              <label htmlFor="fullName" className="block text-sm font-bold text-navy mb-1.5">
+              <label htmlFor="fullName" className={`block text-sm font-bold mb-1.5 ${isKids ? 'text-navy' : 'text-slate-700'}`}>
                 Full Name *
               </label>
               <input
@@ -251,17 +278,24 @@ export default function Contact() {
                 name="fullName"
                 value={form.fullName}
                 onChange={handleInputChange}
-                className={`w-full px-4 py-3 border-2 rounded-2xl focus:outline-none text-navy bg-cream/30 ${errors.fullName ? 'border-coral ring-1 ring-coral/20' : 'border-navy/30 focus:border-coral'
-                  }`}
+                className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
+                  isKids
+                    ? `rounded-2xl border-2 bg-cream/30 text-navy font-semibold ${errors.fullName ? 'border-plum ring-1 ring-plum/20' : 'border-navy/30 focus:border-plum'}`
+                    : `rounded-lg bg-white text-slate-800 border-slate-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500/20 ${errors.fullName ? 'border-red-500 ring-1 ring-red-500/20' : ''}`
+                }`}
                 placeholder="Parent's Name"
               />
-              {errors.fullName && <p className="text-coral text-xs font-bold mt-1.5 animate-pulse">⚠️ {errors.fullName}</p>}
+              {errors.fullName && (
+                <p className={`text-xs mt-1.5 ${isKids ? 'text-plum font-bold animate-pulse' : 'text-red-500 font-medium'}`}>
+                  ⚠️ {errors.fullName}
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Email */}
               <div>
-                <label htmlFor="email" className="block text-sm font-bold text-navy mb-1.5">
+                <label htmlFor="email" className={`block text-sm font-bold mb-1.5 ${isKids ? 'text-navy' : 'text-slate-700'}`}>
                   Email Address *
                 </label>
                 <input
@@ -270,16 +304,23 @@ export default function Contact() {
                   name="email"
                   value={form.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border-2 rounded-2xl focus:outline-none text-navy bg-cream/30 ${errors.email ? 'border-coral ring-1 ring-coral/20' : 'border-navy/30 focus:border-coral'
-                    }`}
+                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
+                    isKids
+                      ? `rounded-2xl border-2 bg-cream/30 text-navy font-semibold ${errors.email ? 'border-plum ring-1 ring-plum/20' : 'border-navy/30 focus:border-plum'}`
+                      : `rounded-lg bg-white text-slate-800 border-slate-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500/20 ${errors.email ? 'border-red-500 ring-1 ring-red-500/20' : ''}`
+                  }`}
                   placeholder="parent@example.com"
                 />
-                {errors.email && <p className="text-coral text-xs font-bold mt-1.5 animate-pulse">⚠️ {errors.email}</p>}
+                {errors.email && (
+                  <p className={`text-xs mt-1.5 ${isKids ? 'text-plum font-bold animate-pulse' : 'text-red-500 font-medium'}`}>
+                    ⚠️ {errors.email}
+                  </p>
+                )}
               </div>
 
               {/* Phone */}
               <div>
-                <label htmlFor="phone" className="block text-sm font-bold text-navy mb-1.5">
+                <label htmlFor="phone" className={`block text-sm font-bold mb-1.5 ${isKids ? 'text-navy' : 'text-slate-700'}`}>
                   Phone Number *
                 </label>
                 <input
@@ -288,18 +329,25 @@ export default function Contact() {
                   name="phone"
                   value={form.phone}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border-2 rounded-2xl focus:outline-none text-navy bg-cream/30 ${errors.phone ? 'border-coral ring-1 ring-coral/20' : 'border-navy/30 focus:border-coral'
-                    }`}
+                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
+                    isKids
+                      ? `rounded-2xl border-2 bg-cream/30 text-navy font-semibold ${errors.phone ? 'border-plum ring-1 ring-plum/20' : 'border-navy/30 focus:border-plum'}`
+                      : `rounded-lg bg-white text-slate-800 border-slate-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500/20 ${errors.phone ? 'border-red-500 ring-1 ring-red-500/20' : ''}`
+                  }`}
                   placeholder="10-digit number"
                 />
-                {errors.phone && <p className="text-coral text-xs font-bold mt-1.5 animate-pulse">⚠️ {errors.phone}</p>}
+                {errors.phone && (
+                  <p className={`text-xs mt-1.5 ${isKids ? 'text-plum font-bold animate-pulse' : 'text-red-500 font-medium'}`}>
+                    ⚠️ {errors.phone}
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Child Age */}
               <div>
-                <label htmlFor="childAge" className="block text-sm font-bold text-navy mb-1.5">
+                <label htmlFor="childAge" className={`block text-sm font-bold mb-1.5 ${isKids ? 'text-navy' : 'text-slate-700'}`}>
                   Child's Age
                 </label>
                 <select
@@ -307,7 +355,11 @@ export default function Contact() {
                   name="childAge"
                   value={form.childAge}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-navy/30 focus:border-coral bg-cream/30 rounded-2xl focus:outline-none font-semibold text-navy"
+                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
+                    isKids
+                      ? 'border-2 border-navy/30 focus:border-plum bg-cream/30 rounded-2xl font-semibold text-navy'
+                      : 'border border-slate-300 focus:border-slate-500 bg-white rounded-lg text-slate-800 font-normal'
+                  }`}
                 >
                   <option value="1.5-2yrs">1.5 – 2 yrs</option>
                   <option value="2-3yrs">2 – 3 yrs</option>
@@ -319,7 +371,7 @@ export default function Contact() {
 
               {/* Program Interested In */}
               <div>
-                <label htmlFor="program" className="block text-sm font-bold text-navy mb-1.5">
+                <label htmlFor="program" className={`block text-sm font-bold mb-1.5 ${isKids ? 'text-navy' : 'text-slate-700'}`}>
                   Program Interested In
                 </label>
                 <select
@@ -327,7 +379,11 @@ export default function Contact() {
                   name="program"
                   value={form.program}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border-2 border-navy/30 focus:border-coral bg-cream/30 rounded-2xl focus:outline-none font-semibold text-navy"
+                  className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
+                    isKids
+                      ? 'border-2 border-navy/30 focus:border-plum bg-cream/30 rounded-2xl font-semibold text-navy'
+                      : 'border border-slate-300 focus:border-slate-500 bg-white rounded-lg text-slate-800 font-normal'
+                  }`}
                 >
                   <option value="Playgroup">Playgroup (1.5 - 2.5y)</option>
                   <option value="Nursery">Nursery (2.5 - 3.5y)</option>
@@ -340,7 +396,7 @@ export default function Contact() {
 
             {/* Message */}
             <div>
-              <label htmlFor="message" className="block text-sm font-bold text-navy mb-1.5">
+              <label htmlFor="message" className={`block text-sm font-bold mb-1.5 ${isKids ? 'text-navy' : 'text-slate-700'}`}>
                 Message / Custom Enquiry
               </label>
               <textarea
@@ -349,19 +405,27 @@ export default function Contact() {
                 value={form.message}
                 onChange={handleInputChange}
                 rows="4"
-                className="w-full px-4 py-3 border-2 border-navy/30 focus:border-coral bg-cream/30 rounded-2xl focus:outline-none text-navy"
+                className={`w-full px-4 py-3 border focus:outline-none transition-colors ${
+                  isKids
+                    ? 'border-2 border-navy/30 focus:border-plum bg-cream/30 rounded-2xl text-navy font-semibold'
+                    : 'border border-slate-300 focus:border-slate-500 bg-white rounded-lg text-slate-800 font-normal'
+                }`}
                 placeholder="Ask us anything!"
               ></textarea>
             </div>
 
             {/* Error Message */}
-            {errorMessage && <p className="text-coral font-bold text-sm text-center">⚠️ {errorMessage}</p>}
+            {errorMessage && <p className={`font-bold text-sm text-center ${isKids ? 'text-plum' : 'text-red-500'}`}>⚠️ {errorMessage}</p>}
 
             {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-coral hover:bg-coral/95 text-white font-accent text-lg rounded-2xl border-3 border-navy shadow-[6px_6px_0px_0px_#1A1A2E] hover:translate-y-[-2px] hover:shadow-[8px_8px_0px_0px_#1A1A2E] active:scale-98 transition-all flex items-center justify-center space-x-2"
+              className={`w-full py-4 transition-all flex items-center justify-center space-x-2 ${
+                isKids
+                  ? 'bg-plum hover:bg-violet/95 text-white font-accent text-lg rounded-2xl border-3 border-navy shadow-[6px_6px_0px_0px_#3B0764] hover:translate-y-[-2px] hover:shadow-[8px_8px_0px_0px_#3B0764] active:scale-98'
+                  : 'bg-slate-900 hover:bg-slate-800 text-white font-sans font-semibold text-base rounded-lg shadow-sm hover:translate-y-[-1px] active:scale-98'
+              }`}
             >
               {loading ? (
                 <div className="flex items-center space-x-2">
@@ -378,18 +442,22 @@ export default function Contact() {
       </section>
 
       {/* 3. MAP SECTION */}
-      <section className="max-w-7xl mx-auto px-4 py-16 border-t border-navy/10 reveal">
+      <section className={`max-w-7xl mx-auto px-4 py-16 border-t reveal ${isKids ? 'border-navy/10' : 'border-slate-200'}`}>
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <h2 className="text-3xl font-display font-extrabold text-navy">
+          <h2 className={`text-3xl ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>
             Come Visit Us 📍
           </h2>
-          <p className="text-navy/70 mt-2 font-medium">
+          <p className={`mt-2 ${isKids ? 'text-navy/70 font-medium' : 'text-slate-650 font-normal'}`}>
             Centrally located on Jagatpur Road, Gota. We have convenient visitor parking and high-security access.
           </p>
         </div>
 
         {/* Map Frame */}
-        <div className="relative border-4 border-coral rounded-3xl overflow-hidden shadow-[8px_8px_0px_0px_#1A1A2E] bg-white h-[500px] w-full">
+        <div className={`relative overflow-hidden bg-white h-[500px] w-full ${
+          isKids
+            ? 'border-4 border-plum rounded-3xl shadow-[8px_8px_0px_0px_#3B0764]'
+            : 'border border-slate-200 rounded-2xl shadow-sm'
+        }`}>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.3643729910777!2d72.5358043!3d23.0956463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e8334460773d5%3A0x63390cc98bb9eb98!2sJagatpur%20Rd%2C%20Gota%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000"
             width="100%"
@@ -407,13 +475,21 @@ export default function Contact() {
             href="https://maps.google.com/?q=Jagatpur+Road,+Gota,+Ahmedabad,+Gujarat+382470"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-sunshine hover:bg-sunshine/90 text-navy font-accent text-sm sm:text-base border-2 border-navy rounded-xl shadow-[3px_3px_0px_0px_#1A1A2E] hover:translate-y-[-1px] transition-all"
+            className={
+              isKids
+                ? "px-6 py-3 bg-gold hover:bg-amber/90 text-navy font-accent text-sm sm:text-base border-2 border-navy rounded-xl shadow-[3px_3px_0px_0px_#3B0764] hover:translate-y-[-1px] transition-all"
+                : "px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-sans font-semibold text-sm sm:text-base rounded-lg shadow-sm hover:translate-y-[-1px] transition-all"
+            }
           >
             🗺️ Get Directions
           </a>
           <a
             href="tel:+917624012997"
-            className="px-6 py-3 bg-white hover:bg-cream text-navy font-accent text-sm sm:text-base border-2 border-navy rounded-xl shadow-[3px_3px_0px_0px_#1A1A2E] hover:translate-y-[-1px] transition-all"
+            className={
+              isKids
+                ? "px-6 py-3 bg-white hover:bg-cream text-navy font-accent text-sm sm:text-base border-2 border-navy rounded-xl shadow-[3px_3px_0px_0px_#3B0764] hover:translate-y-[-1px] transition-all"
+                : "px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 font-sans font-semibold text-sm sm:text-base rounded-lg shadow-sm hover:translate-y-[-1px] transition-all"
+            }
           >
             📞 Call Now
           </a>
@@ -422,27 +498,37 @@ export default function Contact() {
 
       {/* 4. SUCCESS DIALOG MODAL */}
       {showSuccessModal && (
-        <div className="fixed inset-0 bg-[#1A1A2E]/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
-          <div className="bg-white border-3 border-navy rounded-[36px] max-w-sm w-full p-6 text-center shadow-[10px_10px_0px_0px_#1A1A2E] relative animate-[bounce-light_0.4s_ease-out_forwards]">
+        <div className="fixed inset-0 bg-[#3B0764]/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
+          <div className={`bg-white text-center relative w-full ${
+            isKids
+              ? 'border-3 border-navy rounded-[36px] max-w-sm p-6 shadow-[10px_10px_0px_0px_#3B0764] animate-[bounce-light_0.4s_ease-out_forwards]'
+              : 'border border-slate-200 rounded-2xl max-w-sm p-8 shadow-xl'
+          }`}>
 
             {/* Cute Owl Mascot Top Header */}
-            <div className="flex justify-center -mt-16 mb-4">
-              <div className="bg-white border-3 border-navy rounded-full p-3 shadow-md">
-                <TootsMascot size={110} />
+            {isKids && (
+              <div className="flex justify-center -mt-16 mb-4">
+                <div className="bg-white border-3 border-navy rounded-full p-3 shadow-md">
+                  <TootsMascot size={110} />
+                </div>
               </div>
-            </div>
+            )}
 
-            <h3 className="text-2xl font-display font-extrabold text-navy leading-tight">
+            <h3 className={`text-2xl leading-tight ${isKids ? 'font-display font-extrabold text-navy' : 'font-sans font-bold text-slate-800'}`}>
               🎉 Message Sent!
             </h3>
 
-            <p className="text-sm font-semibold text-navy/70 mt-3 leading-relaxed">
+            <p className={`text-sm mt-3 leading-relaxed ${isKids ? 'font-semibold text-navy/70' : 'text-slate-650'}`}>
               We'll get back to you within 24 hours. Let's make learning memorable together!
             </p>
 
             <button
               onClick={handleCloseModal}
-              className="mt-6 w-full py-2.5 bg-coral hover:bg-coral/95 text-white font-accent rounded-xl border-2 border-navy shadow-[3px_3px_0px_0px_#1A1A2E] active:scale-95 transition-all text-sm"
+              className={`w-full py-2.5 mt-6 transition-all text-sm ${
+                isKids
+                  ? 'bg-plum hover:bg-violet/95 text-white font-accent rounded-xl border-2 border-navy shadow-[3px_3px_0px_0px_#3B0764] active:scale-95'
+                  : 'bg-slate-900 hover:bg-slate-800 text-white font-sans font-semibold rounded-lg shadow-sm active:scale-95'
+              }`}
             >
               Awesome, Thanks! 💛
             </button>
