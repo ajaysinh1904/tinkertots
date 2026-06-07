@@ -1,23 +1,89 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import useScrollReveal from '../hooks/useScrollReveal';
 import Lightbox from '../components/Lightbox';
 import { StickerBadge, StarDoodle, HeartDoodle } from '../components/HandDrawnDoodles';
 
 const galleryImages = [
-  { id: 1, src: 'https://picsum.photos/seed/classroom-kids/600/450', title: 'Interactive Reading Circles 📚', category: 'Classroom' },
-  { id: 2, src: 'https://picsum.photos/seed/kids-play/600/450', title: 'Annual Sports Day Relay 🏆', category: 'Events' },
-  { id: 3, src: 'https://picsum.photos/seed/clay-art/600/450', title: 'Clay Modelling Workshop 🎨', category: 'Activities' },
-  { id: 4, src: 'https://picsum.photos/seed/diwali-party/600/450', title: 'Diwali Lantern Crafting 🪔', category: 'Celebrations' },
-  { id: 5, src: 'https://picsum.photos/seed/kids-painting/600/450', title: 'Messy Finger Painting 🎨', category: 'Classroom' },
-  { id: 6, src: 'https://picsum.photos/seed/kids-garden/600/450', title: 'Planting Sunflower Seedlings 🌱', category: 'Activities' },
-  { id: 7, src: 'https://picsum.photos/seed/xmas-party/600/450', title: 'Christmas Carols & Tree 🎄', category: 'Celebrations' },
-  { id: 8, src: 'https://picsum.photos/seed/kids-puzzle/600/450', title: 'Shape Sorting Puzzles 🧩', category: 'Classroom' },
-  { id: 9, src: 'https://picsum.photos/seed/yoga-kids/600/450', title: 'Kids Outdoor Morning Yoga 🧘', category: 'Activities' },
-  { id: 10, src: 'https://picsum.photos/seed/parent-meet/600/450', title: 'Father & Child Craft Session 🤝', category: 'Events' },
-  { id: 11, src: 'https://picsum.photos/seed/kids-music/600/450', title: 'Xylophone Jam Session 🎵', category: 'Activities' },
-  { id: 12, src: 'https://picsum.photos/seed/holi-kids/600/450', title: 'Eco Holi Celebrations 🎨', category: 'Celebrations' },
+  { id: 1, src: 'images/gallery/img1.jpeg', title: 'Interactive Reading Circles 📚', category: 'Classroom' },
+  { id: 2, src: 'images/gallery/img2.jpeg', title: 'Annual Sports Day Relay 🏆', category: 'Events' },
+  { id: 3, src: 'images/gallery/img3.jpeg', title: 'Clay Modelling Workshop 🎨', category: 'Activities' },
+  { id: 4, src: 'images/gallery/img4.jpeg', title: 'Diwali Lantern Crafting 🪔', category: 'Celebrations' },
+  { id: 5, src: 'images/gallery/img5.jpeg', title: 'Messy Finger Painting 🎨', category: 'Classroom' },
+  { id: 6, src: 'images/gallery/img6.jpg', title: 'Planting Sunflower Seedlings 🌱', category: 'Activities' },
+  { id: 7, src: 'images/gallery/img7.jpg', title: 'Christmas Carols & Tree 🎄', category: 'Celebrations' },
+  { id: 8, src: 'images/gallery/img8.jpg', title: 'Shape Sorting Puzzles 🧩', category: 'Classroom' },
+  { id: 9, src: 'images/gallery/img9.jpg', title: 'Kids Outdoor Morning Yoga 🧘', category: 'Activities' },
+  { id: 10, src: 'images/gallery/img2.jpeg', title: 'Father & Child Craft Session 🤝', category: 'Events' },
+  { id: 11, src: 'images/gallery/img3.jpeg', title: 'Xylophone Jam Session 🎵', category: 'Activities' },
+  { id: 12, src: 'images/gallery/img4.jpeg', title: 'Eco Holi Celebrations 🎨', category: 'Celebrations' },
 ];
+
+// GalleryItem component that renders the border first and loads the image smoothly when visible
+function GalleryItem({ img, onClick }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      onClick={onClick}
+      className="group relative cursor-pointer border-3 border-navy rounded-3xl overflow-hidden bg-white shadow-[6px_6px_0px_0px_#1A1A2E] hover:-translate-y-1 transition-all h-[260px] w-full"
+    >
+      {/* Image (smooth fade & scale after visibility & download triggers) */}
+      <img
+        src={img.src}
+        alt={img.title}
+        onLoad={() => setIsLoaded(true)}
+        className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-[800ms] ease-out ${
+          isVisible && isLoaded ? 'opacity-100 scale-100 blur-none' : 'opacity-0 scale-95 blur-[2px]'
+        }`}
+      />
+
+      {/* Dark Hover Overlay */}
+      <div className="absolute inset-0 bg-[#1A1A2E]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+        <div className="text-white text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+          <h3 className="font-display font-bold text-lg leading-tight">
+            {img.title}
+          </h3>
+          <span className="inline-block mt-2 px-3 py-1 bg-sunshine text-navy font-accent text-xs rounded-full">
+            🔍 {img.category}
+          </span>
+        </div>
+      </div>
+
+      {/* Small Zoom Icon indicator */}
+      <div className="absolute top-4 right-4 bg-white/90 border border-navy rounded-full w-8 h-8 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow">
+        🔍
+      </div>
+    </div>
+  );
+}
 
 export const blogPosts = [
   {
@@ -170,7 +236,7 @@ export default function MediaCorner() {
 
   return (
     <div className="bg-cream min-h-screen">
-      
+
       {/* 1. HERO CORNER */}
       <section className="relative py-12 px-4 bg-gradient-to-b from-white/30 to-cream border-b-2 border-navy overflow-hidden">
         {/* Breadcrumb */}
@@ -200,11 +266,10 @@ export default function MediaCorner() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 py-3 text-sm md:text-base font-accent rounded-2xl transition-all duration-200 ${
-                activeTab === tab.id
-                  ? 'bg-coral text-white shadow-[2px_2px_0px_0px_#1A1A2E] border-2 border-navy'
-                  : 'bg-transparent text-navy hover:bg-cream/50'
-              }`}
+              className={`flex-1 py-3 text-sm md:text-base font-accent rounded-2xl transition-all duration-200 ${activeTab === tab.id
+                ? 'bg-coral text-white shadow-[2px_2px_0px_0px_#1A1A2E] border-2 border-navy'
+                : 'bg-transparent text-navy hover:bg-cream/50'
+                }`}
             >
               {tab.label}
             </button>
@@ -221,11 +286,10 @@ export default function MediaCorner() {
               <button
                 key={filter}
                 onClick={() => setGalleryFilter(filter)}
-                className={`px-4 py-1.5 rounded-full border-2 font-accent text-xs sm:text-sm shadow-[2px_2px_0px_0px_#1A1A2E] transition-all ${
-                  galleryFilter === filter
-                    ? 'bg-sunshine border-navy text-navy'
-                    : 'bg-white border-navy/30 text-navy/70 hover:border-navy hover:text-navy'
-                }`}
+                className={`px-4 py-1.5 rounded-full border-2 font-accent text-xs sm:text-sm shadow-[2px_2px_0px_0px_#1A1A2E] transition-all ${galleryFilter === filter
+                  ? 'bg-sunshine border-navy text-navy'
+                  : 'bg-white border-navy/30 text-navy/70 hover:border-navy hover:text-navy'
+                  }`}
               >
                 {filter}
               </button>
@@ -235,36 +299,11 @@ export default function MediaCorner() {
           {/* Stagger fade in images */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredImages.map((img, idx) => (
-              <div
+              <GalleryItem
                 key={img.id}
+                img={img}
                 onClick={() => openLightbox(idx)}
-                className="group relative cursor-pointer border-3 border-navy rounded-3xl overflow-hidden bg-white shadow-[6px_6px_0px_0px_#1A1A2E] hover:-translate-y-1 transition-all h-[260px] animate-[fadeIn_0.5s_ease-out_forwards]"
-                style={{ animationDelay: `${idx * 100}ms` }}
-              >
-                {/* Photo */}
-                <img
-                  src={img.src}
-                  alt={img.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-
-                {/* Dark Hover Overlay */}
-                <div className="absolute inset-0 bg-[#1A1A2E]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                  <div className="text-white text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="font-display font-bold text-lg leading-tight">
-                      {img.title}
-                    </h3>
-                    <span className="inline-block mt-2 px-3 py-1 bg-sunshine text-navy font-accent text-xs rounded-full">
-                      🔍 {img.category}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Small Zoom Icon indicator */}
-                <div className="absolute top-4 right-4 bg-white/90 border border-navy rounded-full w-8 h-8 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow">
-                  🔍
-                </div>
-              </div>
+              />
             ))}
           </div>
 
@@ -293,7 +332,7 @@ export default function MediaCorner() {
                 <div>
                   <div className="w-full h-48 border-b-2 border-navy overflow-hidden relative">
                     <img src={post.img} alt={post.title} className="w-full h-full object-cover" />
-                    
+
                     {/* Rotated Category Tag */}
                     <div className="absolute top-4 left-4">
                       <StickerBadge text={post.category} color={post.badgeColor} rotate="-2deg" className="py-1 px-3 text-xs" />

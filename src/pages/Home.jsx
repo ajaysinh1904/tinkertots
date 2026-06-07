@@ -92,10 +92,10 @@ export default function Home() {
 
   return (
     <div className="bg-cream overflow-hidden">
-      
+
       {/* 1. HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center pt-8 pb-16 px-4 md:px-8 bg-gradient-to-b from-white/20 to-cream">
-        
+
         {/* Floating Particle Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {particles.map((p, idx) => (
@@ -123,9 +123,9 @@ export default function Home() {
           {/* Left Text */}
           <div className="space-y-6 text-center lg:text-left reveal active">
             <StickerBadge text="Now Enrolling for 2026-27! 🎒" color="sunshine" className="mb-2" />
-            
+
             <h1 className="text-4xl sm:text-5xl lg:text-6.5xl font-display font-extrabold text-navy leading-tight">
-              Where Little Minds <br/>
+              Where Little Minds <br />
               <span className="text-coral relative inline-block">
                 Bloom 🌻
                 <svg className="absolute bottom-[-10px] left-0 w-full h-[12px] text-sunshine" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -164,11 +164,11 @@ export default function Home() {
           <div className="relative flex justify-center lg:justify-end reveal active">
             {/* Background morphing blob */}
             <div className="absolute inset-0 bg-gradient-to-tr from-skyblue/40 to-lavender/30 animate-blob-morph -z-10 scale-95" />
-            
+
             {/* Large illustration container */}
             <div className="w-[320px] sm:w-[450px] h-[320px] sm:h-[450px] overflow-hidden border-4 border-navy rounded-[60%_40%_30%_70%/_60%_30%_70%_40%] animate-blob-morph shadow-[12px_12px_0px_0px_#1A1A2E]">
               <img
-                src="https://picsum.photos/seed/tinkertots-kids-play/600/600"
+                src="/images/home/img1.png"
                 alt="Happy children learning and playing"
                 className="w-full h-full object-cover"
               />
@@ -275,7 +275,7 @@ export default function Home() {
                 <div className="w-full h-36 rounded-2xl overflow-hidden border-2 border-navy">
                   <img src={prog.img} alt={prog.title} className="w-full h-full object-cover" />
                 </div>
-                
+
                 {/* Age Tag */}
                 <span className={`inline-block px-3 py-1 font-accent text-xs border border-navy rounded-full shadow-[1px_1px_0px_0px_#1A1A2E] ${prog.badgeColor}`}>
                   👶 {prog.age}
@@ -284,7 +284,7 @@ export default function Home() {
                 <h3 className="text-xl font-display font-extrabold text-navy">
                   {prog.title}
                 </h3>
-                
+
                 <p className="text-sm text-navy/80 font-medium line-clamp-3">
                   {prog.desc}
                 </p>
@@ -313,7 +313,7 @@ export default function Home() {
       {/* 4. ACADEMICS TABS SECTION */}
       <section className="py-20 px-4 bg-white relative z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto relative">
-          
+
           {/* Lavender blob container backdrops */}
           <div className="absolute inset-0 bg-lavender/10 rounded-[40%_60%_70%_30%/_50%_60%_40%_50%] -z-10 scale-105 animate-blob-morph" />
 
@@ -336,11 +336,10 @@ export default function Home() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 sm:px-6 py-2.5 sm:py-3 font-accent text-sm sm:text-base border-2 rounded-2xl relative transition-all duration-200 ${
-                  activeTab === tab.id
-                    ? 'bg-navy text-white border-navy shadow-[4px_4px_0px_0px_rgba(26,26,46,0.2)]'
-                    : 'bg-cream/50 text-navy border-navy/20 hover:border-navy'
-                }`}
+                className={`px-4 sm:px-6 py-2.5 sm:py-3 font-accent text-sm sm:text-base border-2 rounded-2xl relative transition-all duration-200 ${activeTab === tab.id
+                  ? 'bg-navy text-white border-navy shadow-[4px_4px_0px_0px_rgba(26,26,46,0.2)]'
+                  : 'bg-cream/50 text-navy border-navy/20 hover:border-navy'
+                  }`}
               >
                 {tab.label}
                 {activeTab === tab.id && (
@@ -407,13 +406,13 @@ export default function Home() {
       {/* 5. WHY CHOOSE US SECTION */}
       <section className="py-20 px-4 max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
+
           {/* Progress Bars (Left) */}
           <div className="space-y-4 bg-white border-3 border-navy p-6 md:p-8 rounded-3xl shadow-[6px_6px_0px_0px_#1A1A2E] reveal">
             <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-navy mb-6">
               Our Growth Highlights 📈
             </h2>
-            
+
             <AnimatedProgress label="Creative Learning" percentage={97} color="coral" emoji="🎨" />
             <AnimatedProgress label="Child Safety" percentage={100} color="mint" emoji="🛡️" />
             <AnimatedProgress label="Happiness Index" percentage={98} color="sunshine" emoji="😄" />
@@ -424,7 +423,7 @@ export default function Home() {
           {/* Bio + Image (Right) */}
           <div className="space-y-6 reveal">
             <StickerBadge text="Safe & Certified 🏆" color="coral" className="mb-2" />
-            
+
             <h2 className="text-3xl sm:text-4.5xl font-display font-extrabold text-navy leading-tight">
               A Warm Haven Where Happiness Meets Safety 🏡
             </h2>
@@ -445,9 +444,9 @@ export default function Home() {
             </div>
 
             {/* School photo in blob frame */}
-            <div className="w-full h-56 md:h-64 overflow-hidden border-3 border-navy rounded-[30%_70%_70%_30%/_50%_60%_40%_50%] animate-blob-morph shadow-[6px_6px_0px_0px_#1A1A2E]">
+            <div className="w-full h-76 md:h-64 overflow-hidden border-3 border-navy rounded-[30%_70%_70%_30%/_50%_60%_40%_50%] animate-blob-morph shadow-[6px_6px_0px_0px_#1A1A2E]">
               <img
-                src="https://picsum.photos/seed/tinkertots-school-room/600/400"
+                src="/images/home/img2.png"
                 alt="Preschool school classroom safety and setup"
                 className="w-full h-full object-cover"
               />
@@ -492,7 +491,7 @@ export default function Home() {
           <div className="relative order-2 lg:order-1 flex justify-center reveal">
             <div className="w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] overflow-hidden border-3 border-navy rounded-[40%_60%_40%_60%/_50%_40%_60%_50%] animate-blob-morph shadow-[8px_8px_0px_0px_#1A1A2E]">
               <img
-                src="https://picsum.photos/seed/tinkertots-parent-teacher/500/500"
+                src="/images/home/image2.jpg"
                 alt="Parent teacher collaboration at Tinkytots"
                 className="w-full h-full object-cover"
               />
@@ -656,7 +655,7 @@ export default function Home() {
                 <div>
                   <div className="w-full h-48 border-b-2 border-navy overflow-hidden relative">
                     <img src={blog.img} alt={blog.title} className="w-full h-full object-cover" />
-                    
+
                     {/* Rotated sticker badge */}
                     <div className="absolute top-4 left-4">
                       <StickerBadge text={blog.category} color={blog.badgeColor} rotate="-2deg" className="py-1 px-3 text-xs" />
